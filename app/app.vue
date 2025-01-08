@@ -9,11 +9,14 @@ useHead({
   ]
 })
 
-// banner图片数据
-const bannerImages = [
-  'https://picsum.photos/1920/600?random=1',
-  'https://picsum.photos/1920/600?random=2',
-]
+// 状态管理
+const colorMode = useColorMode()
+const isMobileMenuOpen = ref(false)
+
+// 计算属性
+const currentIcon = computed(() => 
+  colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'
+)
 
 // 菜单数据
 const menuItems = [
@@ -23,33 +26,56 @@ const menuItems = [
   { label: '联系', path: '/contact' }
 ]
 
-// 控制移动端菜单显示
-const isMobileMenuOpen = ref(false)
-
-// 切换移动端菜单
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
+// 动画配置
+const menuTransition = {
+  'enter-active-class': 'transition-[max-height] duration-400 ease-in-out',
+  'enter-from-class': 'max-h-0 overflow-hidden',
+  'enter-to-class': 'max-h-[400px] overflow-hidden',
+  'leave-active-class': 'transition-[max-height] duration-300 ease-in-out',
+  'leave-from-class': 'max-h-[400px] overflow-hidden',
+  'leave-to-class': 'max-h-0 overflow-hidden'
 }
 
-// 获取颜色模式
-const colorMode = useColorMode()
-
-// 使用计算属性来确保响应性
-const currentIcon = computed(() => 
-  colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'
-)
-
-const toggleColorMode = () => {
-  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+const menuItemTransition = {
+  'enter-active-class': 'transition duration-400 ease-out delay-100',
+  'enter-from-class': 'opacity-0 translate-y-4',
+  'enter-to-class': 'opacity-100 translate-y-0',
+  'leave-active-class': 'transition duration-300 ease-in',
+  'leave-from-class': 'opacity-100 translate-y-0',
+  'leave-to-class': 'opacity-0 translate-y-4'
 }
+
+// 添加 bannerImages 定义
+const bannerImages = ref([
+  {
+    id: 1,
+    url: '/images/banner1.jpg',
+    // title: '致力于成为服务全球的',
+    // description: '电力综合解决方案提供商'
+  },
+  {
+    id: 2,
+    url: '/images/banner2.jpg',
+    // title: '全球领先',
+    // description: '电力设备制造商'
+  }
+])
+
+// 添加 logo 路径
+const logoUrl = '/images/logo.png'  // logo 放在 public/images 目录下，与 banner 图片一起
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <!-- 头部导航 -->
     <header class="h-16 md:h-20 bg-white dark:bg-gray-800 shadow-sm">
       <nav class="container mx-auto px-4 h-full flex items-center justify-between">
-        <div class="text-2xl font-bold">Logo</div>
+        <NuxtLink to="/" class="flex items-center">
+          <img 
+            :src="logoUrl" 
+            alt="GoodWind Logo" 
+            class="h-8 md:h-10 w-auto"
+          >
+        </NuxtLink>
         
         <!-- 桌面端菜单 -->
         <div class="hidden md:flex items-center gap-8">
@@ -63,15 +89,15 @@ const toggleColorMode = () => {
           </NuxtLink>
         </div>
 
-        <!-- 主题切换和移动端菜单按钮 -->
         <div class="flex items-center gap-4">
+          <!-- 主题切换按钮 -->
           <ClientOnly>
             <UButton
               :icon="currentIcon"
               color="gray"
               variant="ghost"
               class="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
-              @click="toggleColorMode"
+              @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
             />
           </ClientOnly>
           
@@ -79,39 +105,23 @@ const toggleColorMode = () => {
           <button 
             class="md:hidden p-2 relative w-10 h-10 focus:outline-none"
             aria-label="菜单"
-            @click="toggleMobileMenu"
+            @click="isMobileMenuOpen = !isMobileMenuOpen"
           >
             <div class="hamburger-menu" :class="{ 'is-active': isMobileMenuOpen }">
-              <span/>
-              <span/>
-              <span/>
+              <span v-for="n in 3" :key="n"/>
             </div>
           </button>
         </div>
       </nav>
 
       <!-- 移动端菜单 -->
-      <Transition
-        enter-active-class="transition duration-300 ease-out"
-        enter-from-class="transform -translate-y-full opacity-0"
-        enter-to-class="transform translate-y-0 opacity-100"
-        leave-active-class="transition duration-200 ease-in"
-        leave-from-class="transform translate-y-0 opacity-100"
-        leave-to-class="transform -translate-y-full opacity-0"
-      >
+      <Transition v-bind="menuTransition">
         <div 
           v-show="isMobileMenuOpen"
-          class="md:hidden fixed top-16 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg z-50"
+          class="md:hidden fixed inset-x-0 top-16 bg-white dark:bg-gray-800 shadow-lg z-50"
         >
           <div class="container mx-auto px-4 py-4">
-            <TransitionGroup
-              enter-active-class="transition duration-300 ease-out delay-150"
-              enter-from-class="opacity-0 translate-y-4"
-              enter-to-class="opacity-100 translate-y-0"
-              leave-active-class="transition duration-200 ease-in"
-              leave-from-class="opacity-100 translate-y-0"
-              leave-to-class="opacity-0 translate-y-4"
-            >
+            <TransitionGroup v-bind="menuItemTransition">
               <NuxtLink 
                 v-for="(item, index) in menuItems" 
                 :key="item.path"
@@ -139,10 +149,14 @@ const toggleColorMode = () => {
         :autoplay="{ delay: 3000 }"
       >
         <img 
-          :src="item" 
+          :src="item.url" 
+          :alt="item.title"
           class="w-full h-full object-cover"
-          alt="Banner图片"
         >
+        <!-- <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/60 to-transparent text-white">
+          <h2 class="text-3xl font-bold">{{ item.title }}</h2>
+          <p class="mt-2 text-xl">{{ item.description }}</p>
+        </div> -->
       </UCarousel>
     </section>
 
@@ -210,7 +224,6 @@ html {
 </style>
 
 <style scoped>
-/* 汉堡菜单按钮样式 */
 .hamburger-menu {
   position: relative;
   width: 24px;
@@ -228,39 +241,36 @@ html {
   transition: all 0.3s;
 }
 
-.hamburger-menu span:nth-child(1) {
-  top: 0;
+.hamburger-menu span:nth-child(1) { 
+  top: 0; 
 }
 
-.hamburger-menu span:nth-child(2) {
-  top: 50%;
-  transform: translateY(-50%);
+.hamburger-menu span:nth-child(2) { 
+  top: 50%; 
+  transform: translateY(-50%); 
 }
 
-.hamburger-menu span:nth-child(3) {
-  bottom: 0;
+.hamburger-menu span:nth-child(3) { 
+  bottom: 0; 
 }
 
-/* 汉堡菜单激活状态 */
-.hamburger-menu.is-active span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+.hamburger-menu.is-active span:nth-child(1) { 
+  transform: translateY(10px) rotate(45deg); 
 }
 
-.hamburger-menu.is-active span:nth-child(2) {
-  opacity: 0;
+.hamburger-menu.is-active span:nth-child(2) { 
+  opacity: 0; 
 }
 
-.hamburger-menu.is-active span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
+.hamburger-menu.is-active span:nth-child(3) { 
+  transform: translateY(-10px) rotate(-45deg); 
 }
 
-/* 确保移动菜单有合适的最大高度和滚动 */
 .mobile-menu {
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
 }
 
-/* 添加滚动条样式 */
 .mobile-menu::-webkit-scrollbar {
   width: 4px;
 }
@@ -270,11 +280,11 @@ html {
 }
 
 .mobile-menu::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
+  background-color: rgb(203, 213, 225);
   border-radius: 2px;
 }
 
-.dark .mobile-menu::-webkit-scrollbar-thumb {
-  background: #4a5568;
+:root.dark .mobile-menu::-webkit-scrollbar-thumb {
+  background-color: rgb(75, 85, 99);
 }
 </style>

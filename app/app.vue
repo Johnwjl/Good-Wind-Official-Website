@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // 页面元数据设置
 useHead({
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   title: '网站标题',
   meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' },
     { name: 'description', content: '网站描述' },
     { name: 'keywords', content: '关键词1,关键词2' }
   ]
@@ -11,7 +11,6 @@ useHead({
 
 // 状态管理
 const colorMode = useColorMode()
-const isMobileMenuOpen = ref(false)
 
 // 计算属性
 const currentIcon = computed(() => 
@@ -19,31 +18,232 @@ const currentIcon = computed(() =>
 )
 
 // 菜单数据
-const menuItems = [
+const menuItems1 = [
   { label: '首页', path: '/' },
   { label: '关于', path: '/about' },
   { label: '服务', path: '/services' },
   { label: '联系', path: '/contact' }
 ]
 
-// 动画配置
-const menuTransition = {
-  'enter-active-class': 'transition-all duration-300 ease-out',
-  'enter-from-class': 'opacity-100 transform scale-y-0 origin-top',
-  'enter-to-class': 'opacity-100 transform scale-y-100 origin-top',
-  'leave-active-class': 'transition-all duration-200 ease-in',
-  'leave-from-class': 'opacity-100 transform scale-y-100 origin-top',
-  'leave-to-class': 'opacity-100 transform scale-y-0 origin-top'
-}
+const menuItems = ref([
+  {
+    label: '定点安装',
+    icon: 'i-hugeicons-installing-updates-01',
+    to: '/getting-started',
+    children: [
+      {
+        label: 'Introduction',
+        description: 'Fully styled and customizable components for Nuxt.',
+        icon: 'i-lucide-house'
+      },
+      {
+        label: 'Installation',
+        description: 'Learn how to install and configure Nuxt UI in your application.',
+        icon: 'i-lucide-cloud-download'
+      },
+      {
+        label: 'Icons',
+        icon: 'i-lucide-smile',
+        description: 'You have nothing to do, @nuxt/icon will handle it automatically.'
+      },
+      {
+        label: 'Colors',
+        icon: 'i-lucide-swatch-book',
+        description: 'Choose a primary and a neutral color from your Tailwind CSS theme.'
+      },
+      {
+        label: 'Theme',
+        icon: 'i-lucide-cog',
+        description: 'You can customize components by using the `class` / `ui` props or in your app.config.ts.'
+      }
+    ]
+  },
+  {
+    label: '移动/租赁',
+    icon: 'i-tabler-engine',
+    to: '/composables',
+    children: [
+      {
+        label: 'defineShortcuts',
+        icon: 'i-lucide-file-text',
+        description: 'Define shortcuts for your application.',
+        to: '/composables/define-shortcuts'
+      },
+      {
+        label: 'useModal',
+        icon: 'i-lucide-file-text',
+        description: 'Display a modal within your application.',
+        to: '/composables/use-modal'
+      },
+      {
+        label: 'useSlideover',
+        icon: 'i-lucide-file-text',
+        description: 'Display a slideover within your application.',
+        to: '/composables/use-slideover'
+      },
+      {
+        label: 'useToast',
+        icon: 'i-lucide-file-text',
+        description: 'Display a toast within your application.',
+        to: '/composables/use-toast'
+      }
+    ]
+  },
+  {
+    label: '电信应用',
+    icon: 'i-tdesign-system-application',
+    to: '/components',
+    active: true,
+    children: [
+      {
+        label: 'Link',
+        icon: 'i-lucide-file-text',
+        description: 'Use NuxtLink with superpowers.',
+        to: '/components/link'
+      },
+      {
+        label: 'Modal',
+        icon: 'i-lucide-file-text',
+        description: 'Display a modal within your application.',
+        to: '/components/modal'
+      },
+      {
+        label: 'NavigationMenu',
+        icon: 'i-lucide-file-text',
+        description: 'Display a list of links.',
+        to: '/components/navigation-menu'
+      },
+      {
+        label: 'Pagination',
+        icon: 'i-lucide-file-text',
+        description: 'Display a list of pages.',
+        to: '/components/pagination'
+      },
+      {
+        label: 'Popover',
+        icon: 'i-lucide-file-text',
+        description: 'Display a non-modal dialog that floats around a trigger element.',
+        to: '/components/popover'
+      },
+      {
+        label: 'Progress',
+        icon: 'i-lucide-file-text',
+        description: 'Show a horizontal bar to indicate task progression.',
+        to: '/components/progress'
+      }
+    ]
+  },
+  {
+    label: '综合发电方案',
+    icon: 'i-carbon-ibm-cloud-pak-integration',
+    to: '/getting-started',
+    children: [
+      {
+        label: 'Introduction',
+        description: 'Fully styled and customizable components for Nuxt.',
+        icon: 'i-lucide-house'
+      },
+      {
+        label: 'Installation',
+        description: 'Learn how to install and configure Nuxt UI in your application.',
+        icon: 'i-lucide-cloud-download'
+      },
+      {
+        label: 'Icons',
+        icon: 'i-lucide-smile',
+        description: 'You have nothing to do, @nuxt/icon will handle it automatically.'
+      },
+      {
+        label: 'Colors',
+        icon: 'i-lucide-swatch-book',
+        description: 'Choose a primary and a neutral color from your Tailwind CSS theme.'
+      },
+      {
+        label: 'Theme',
+        icon: 'i-lucide-cog',
+        description: 'You can customize components by using the `class` / `ui` props or in your app.config.ts.'
+      }
+    ]
+  },
+  {
+    label: '资源库',
+    icon: 'i-heroicons-circle-stack',
+    to: '/getting-started',
+    children: [
+      {
+        label: 'Introduction',
+        description: 'Fully styled and customizable components for Nuxt.',
+        icon: 'i-lucide-house'
+      },
+      {
+        label: 'Installation',
+        description: 'Learn how to install and configure Nuxt UI in your application.',
+        icon: 'i-lucide-cloud-download'
+      },
+      {
+        label: 'Icons',
+        icon: 'i-lucide-smile',
+        description: 'You have nothing to do, @nuxt/icon will handle it automatically.'
+      },
+      {
+        label: 'Colors',
+        icon: 'i-lucide-swatch-book',
+        description: 'Choose a primary and a neutral color from your Tailwind CSS theme.'
+      },
+      {
+        label: 'Theme',
+        icon: 'i-lucide-cog',
+        description: 'You can customize components by using the `class` / `ui` props or in your app.config.ts.'
+      }
+    ]
+  },
+  {
+    label: '行业应用',
+    icon: 'i-streamline-industry-innovation-and-infrastructure-solid',
+    to: '/getting-started',
+    children: [
+      {
+        label: 'Introduction',
+        description: 'Fully styled and customizable components for Nuxt.',
+        icon: 'i-lucide-house'
+      },
+      {
+        label: 'Installation',
+        description: 'Learn how to install and configure Nuxt UI in your application.',
+        icon: 'i-lucide-cloud-download'
+      },
+      {
+        label: 'Icons',
+        icon: 'i-lucide-smile',
+        description: 'You have nothing to do, @nuxt/icon will handle it automatically.'
+      },
+      {
+        label: 'Colors',
+        icon: 'i-lucide-swatch-book',
+        description: 'Choose a primary and a neutral color from your Tailwind CSS theme.'
+      },
+      {
+        label: 'Theme',
+        icon: 'i-lucide-cog',
+        description: 'You can customize components by using the `class` / `ui` props or in your app.config.ts.'
+      }
+    ]
+  },
+  // {
+  //   label: 'GitHub',
+  //   icon: 'i-simple-icons-github',
+  //   badge: '3.8k',
+  //   to: 'https://github.com/nuxt/ui',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'Help',
+  //   icon: 'i-lucide-circle-help',
+  //   disabled: true
+  // }
+])
 
-const menuItemTransition = {
-  'enter-active-class': 'transition duration-300 ease-out delay-150',
-  'enter-from-class': 'opacity-0 translate-y-4',
-  'enter-to-class': 'opacity-100 translate-y-0',
-  'leave-active-class': 'transition duration-200 ease-in',
-  'leave-from-class': 'opacity-100 translate-y-0',
-  'leave-to-class': 'opacity-0 translate-y-4'
-}
+
 
 // 添加 bannerImages 定义
 const bannerImages = ref([
@@ -63,79 +263,51 @@ const logoUrl = '/images/logo.png'
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <header class="h-16 md:h-20 bg-white dark:bg-gray-800 shadow-sm">
-      <nav class="container mx-auto px-4 h-full flex items-center justify-between">
-        <NuxtLink to="/" class="flex items-center">
-          <img 
-            :src="logoUrl" 
-            alt="GoodWind Logo" 
-            class="h-8 md:h-10 w-auto"
-          >
-        </NuxtLink>
-        
-        <!-- 桌面端菜单 -->
-        <div class="hidden md:flex items-center gap-8">
-          <NuxtLink 
-            v-for="item in menuItems" 
-            :key="item.path"
-            :to="item.path"
-            class="text-gray-700 dark:text-gray-300 hover:text-primary-500 transition-colors"
-          >
-            {{ item.label }}
+    <header class="h-16 md:h-20 w-full bg-white dark:bg-gray-800 shadow-sm relative z-50">
+      <nav class="w-full h-full mx-auto px-4 flex items-center justify-between bg-white dark:bg-gray-800">
+          <NuxtLink to="/" class="flex">
+            <img 
+              :src="logoUrl" 
+              alt="GoodWind Logo" 
+              class="h-8 md:h-10 w-auto"
+            >
           </NuxtLink>
-        </div>
-
-        <div class="flex items-center gap-4">
-          <!-- 主题切换按钮 -->
-          <ClientOnly>
-            <UButton
-              :icon="currentIcon"
-              color="gray"
-              variant="ghost"
-              class="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
-              @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
-            />
-          </ClientOnly>
           
-          <!-- 汉堡菜单按钮 -->
-          <button 
-            class="md:hidden p-2 relative w-10 h-10 focus:outline-none"
-            aria-label="菜单"
-            @click="isMobileMenuOpen = !isMobileMenuOpen"
-          >
-            <div class="hamburger-menu" :class="{ 'is-active': isMobileMenuOpen }">
-              <span v-for="n in 3" :key="n"/>
-            </div>
-          </button>
-        </div>
+          <!-- 桌面端菜单 -->
+          <UNavigationMenu :items="menuItems" class="hidden lg:flex items-center gap-8 w-full justify-center" />
+
+          <div class="flex items-center gap-4">
+            <!-- 主题切换按钮 -->
+            <ClientOnly>
+              <UButton
+                :icon="currentIcon"
+                color="gray"
+                variant="ghost"
+                class="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+                @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
+              />
+            </ClientOnly>
+            
+            <!-- 汉堡菜单按钮 -->
+            <USlideover title="顺风发电官网">
+              <UButton
+              class="lg:hidden" 
+              icon="i-lucide-menu" color="neutral" variant="outline" 
+              />
+
+              <template #body>
+                <!-- 移动端菜单 -->
+                <UNavigationMenu orientation="vertical" :items="menuItems" class="w-full h-full" />
+              </template>
+            </USlideover>
+
+          </div>
       </nav>
 
-      <!-- 移动端菜单 -->
-      <Transition v-bind="menuTransition">
-        <div 
-          v-show="isMobileMenuOpen"
-          class="md:hidden absolute inset-x-0 top-16 md:top-20 bg-white dark:bg-gray-800 shadow-lg z-50"
-        >
-          <div class="container mx-auto px-4 py-4">
-            <TransitionGroup v-bind="menuItemTransition">
-              <NuxtLink 
-                v-for="(item, index) in menuItems" 
-                :key="item.path"
-                :to="item.path"
-                :style="{ transitionDelay: `${index * 50}ms` }"
-                class="block py-2 text-gray-700 dark:text-gray-300 hover:text-primary-500 transition-colors"
-                @click="isMobileMenuOpen = false"
-              >
-                {{ item.label }}
-              </NuxtLink>
-            </TransitionGroup>
-          </div>
-        </div>
-      </Transition>
     </header>
 
     <!-- Banner区域 -->
-    <section class="w-full relative" style="aspect-ratio: 16/5;">
+    <section class="w-full relative z-10" style="aspect-ratio: 16/5;">
       <UCarousel 
         v-slot="{ item }" 
         :items="bannerImages" 
@@ -146,7 +318,7 @@ const logoUrl = '/images/logo.png'
       >
         <img 
           :src="item.url" 
-          :alt="item.title"
+          :alt="item.url"
           class="w-full h-full object-cover"
         >
       </UCarousel>
@@ -182,18 +354,6 @@ html {
   }
 }
 
-/* 添加过渡动画 */
-.mobile-menu-enter-active,
-.mobile-menu-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.mobile-menu-enter-from,
-.mobile-menu-leave-to {
-  opacity: 0;
-  transform: translateY(-100%);
-}
-
 /* 主题切换过渡效果 */
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -217,67 +377,5 @@ html {
 </style>
 
 <style scoped>
-.hamburger-menu {
-  position: relative;
-  width: 24px;
-  height: 20px;
-  margin: auto;
-}
 
-.hamburger-menu span {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: currentColor;
-  border-radius: 2px;
-  transition: all 0.3s;
-}
-
-.hamburger-menu span:nth-child(1) { 
-  top: 0; 
-}
-
-.hamburger-menu span:nth-child(2) { 
-  top: 50%; 
-  transform: translateY(-50%); 
-}
-
-.hamburger-menu span:nth-child(3) { 
-  bottom: 0; 
-}
-
-.hamburger-menu.is-active span:nth-child(1) { 
-  transform: translateY(10px) rotate(45deg); 
-}
-
-.hamburger-menu.is-active span:nth-child(2) { 
-  opacity: 0; 
-}
-
-.hamburger-menu.is-active span:nth-child(3) { 
-  transform: translateY(-10px) rotate(-45deg); 
-}
-
-.mobile-menu {
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
-}
-
-.mobile-menu::-webkit-scrollbar {
-  width: 4px;
-}
-
-.mobile-menu::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.mobile-menu::-webkit-scrollbar-thumb {
-  background-color: rgb(203, 213, 225);
-  border-radius: 2px;
-}
-
-:root.dark .mobile-menu::-webkit-scrollbar-thumb {
-  background-color: rgb(75, 85, 99);
-}
 </style>

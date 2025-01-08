@@ -28,19 +28,19 @@ const menuItems = [
 
 // 动画配置
 const menuTransition = {
-  'enter-active-class': 'transition-[max-height] duration-400 ease-in-out',
-  'enter-from-class': 'max-h-0 overflow-hidden',
-  'enter-to-class': 'max-h-[400px] overflow-hidden',
-  'leave-active-class': 'transition-[max-height] duration-300 ease-in-out',
-  'leave-from-class': 'max-h-[400px] overflow-hidden',
-  'leave-to-class': 'max-h-0 overflow-hidden'
+  'enter-active-class': 'transition-all duration-300 ease-out',
+  'enter-from-class': 'opacity-100 transform scale-y-0 origin-top',
+  'enter-to-class': 'opacity-100 transform scale-y-100 origin-top',
+  'leave-active-class': 'transition-all duration-200 ease-in',
+  'leave-from-class': 'opacity-100 transform scale-y-100 origin-top',
+  'leave-to-class': 'opacity-100 transform scale-y-0 origin-top'
 }
 
 const menuItemTransition = {
-  'enter-active-class': 'transition duration-400 ease-out delay-100',
+  'enter-active-class': 'transition duration-300 ease-out delay-150',
   'enter-from-class': 'opacity-0 translate-y-4',
   'enter-to-class': 'opacity-100 translate-y-0',
-  'leave-active-class': 'transition duration-300 ease-in',
+  'leave-active-class': 'transition duration-200 ease-in',
   'leave-from-class': 'opacity-100 translate-y-0',
   'leave-to-class': 'opacity-0 translate-y-4'
 }
@@ -50,19 +50,15 @@ const bannerImages = ref([
   {
     id: 1,
     url: '/images/banner1.jpg',
-    // title: '致力于成为服务全球的',
-    // description: '电力综合解决方案提供商'
   },
   {
     id: 2,
     url: '/images/banner2.jpg',
-    // title: '全球领先',
-    // description: '电力设备制造商'
   }
 ])
 
 // 添加 logo 路径
-const logoUrl = '/images/logo.png'  // logo 放在 public/images 目录下，与 banner 图片一起
+const logoUrl = '/images/logo.png'
 </script>
 
 <template>
@@ -118,7 +114,7 @@ const logoUrl = '/images/logo.png'  // logo 放在 public/images 目录下，与
       <Transition v-bind="menuTransition">
         <div 
           v-show="isMobileMenuOpen"
-          class="md:hidden fixed inset-x-0 top-16 bg-white dark:bg-gray-800 shadow-lg z-50"
+          class="md:hidden absolute inset-x-0 top-16 md:top-20 bg-white dark:bg-gray-800 shadow-lg z-50"
         >
           <div class="container mx-auto px-4 py-4">
             <TransitionGroup v-bind="menuItemTransition">
@@ -153,10 +149,6 @@ const logoUrl = '/images/logo.png'  // logo 放在 public/images 目录下，与
           :alt="item.title"
           class="w-full h-full object-cover"
         >
-        <!-- <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/60 to-transparent text-white">
-          <h2 class="text-3xl font-bold">{{ item.title }}</h2>
-          <p class="mt-2 text-xl">{{ item.description }}</p>
-        </div> -->
       </UCarousel>
     </section>
 
@@ -193,12 +185,13 @@ html {
 /* 添加过渡动画 */
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .mobile-menu-enter-from,
 .mobile-menu-leave-to {
   opacity: 0;
+  transform: translateY(-100%);
 }
 
 /* 主题切换过渡效果 */

@@ -29,7 +29,7 @@ const menuItems = ref([
   {
     label: '定点安装',
     icon: 'i-hugeicons-installing-updates-01',
-    to: '/getting-started',
+    // to: '/getting-started',
     children: [
       {
         label: 'Introduction',
@@ -61,7 +61,7 @@ const menuItems = ref([
   {
     label: '移动/租赁',
     icon: 'i-tabler-engine',
-    to: '/composables',
+    // to: '/composables',
     children: [
       {
         label: 'defineShortcuts',
@@ -92,7 +92,7 @@ const menuItems = ref([
   {
     label: '电信应用',
     icon: 'i-tdesign-system-application',
-    to: '/components',
+    // to: '/components',
     active: true,
     children: [
       {
@@ -136,7 +136,7 @@ const menuItems = ref([
   {
     label: '综合发电方案',
     icon: 'i-carbon-ibm-cloud-pak-integration',
-    to: '/getting-started',
+    // to: '/getting-started',
     children: [
       {
         label: 'Introduction',
@@ -168,7 +168,7 @@ const menuItems = ref([
   {
     label: '资源库',
     icon: 'i-heroicons-circle-stack',
-    to: '/getting-started',
+    // to: '/getting-started',
     children: [
       {
         label: 'Introduction',
@@ -199,8 +199,8 @@ const menuItems = ref([
   },
   {
     label: '行业应用',
-    icon: 'i-streamline-industry-innovation-and-infrastructure-solid',
-    to: '/getting-started',
+    icon: 'i-ant-design-deployment-unit-outlined',
+    // to: '/getting-started',
     children: [
       {
         label: 'Introduction',
@@ -263,8 +263,8 @@ const logoUrl = '/images/logo.png'
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <header class="h-16 md:h-20 w-full bg-white dark:bg-gray-800 shadow-sm relative z-50">
-      <nav class="w-full h-full mx-auto px-4 flex items-center justify-between bg-white dark:bg-gray-800">
+    <header class="h-16 md:h-20 w-full relative z-50">
+      <nav class="w-full h-full mx-auto px-4 flex items-center justify-between">
           <NuxtLink to="/" class="flex">
             <img 
               :src="logoUrl" 
@@ -274,7 +274,7 @@ const logoUrl = '/images/logo.png'
           </NuxtLink>
           
           <!-- 桌面端菜单 -->
-          <UNavigationMenu :items="menuItems" class="hidden lg:flex items-center gap-8 w-full justify-center" />
+          <UNavigationMenu variant="link" :items="menuItems" class="hidden lg:flex items-center gap-8 w-full justify-center" />
 
           <div class="flex items-center gap-4">
             <!-- 主题切换按钮 -->
@@ -297,7 +297,22 @@ const logoUrl = '/images/logo.png'
 
               <template #body>
                 <!-- 移动端菜单 -->
-                <UNavigationMenu orientation="vertical" :items="menuItems" class="w-full h-full" />
+                <UNavigationMenu 
+                  variant="link" 
+                  orientation="vertical" 
+                  :items="menuItems" 
+                  class="w-full h-full"
+                  :ui="{
+                    // 自定义子菜单样式
+                    childList: 'w-full',
+                    childLink: 'group w-full px-4 py-3 text-lg hover:bg-gray-100 dark:hover:bg-gray-800',
+                    childLinkLabel: 'font-medium text-lg',
+                    childLinkDescription: 'text-base text-gray-500 dark:text-gray-400',
+                    // 自定义父菜单样式
+                    link: 'group w-full px-4 py-3 text-xl hover:bg-gray-100 dark:hover:bg-gray-800',
+                    linkLabel: 'font-medium text-xl'
+                  }"
+                />
               </template>
             </USlideover>
 
@@ -333,9 +348,16 @@ const logoUrl = '/images/logo.png'
     </main>
 
     <!-- 页脚 -->
-    <footer class="h-16 md:h-20 bg-gray-100 dark:bg-gray-800">
-      <div class="container mx-auto px-4 h-full flex items-center justify-center">
-        <p class="text-sm text-gray-600 dark:text-gray-400">
+    <footer class="container mx-auto h-dvh">
+      <div class="h-16 flex items-center justify-center">
+        <p class="text-sm">
+          © {{ new Date().getFullYear() }} 版权所有
+        </p>
+      </div>
+      <USeparator />
+      <!-- 底部版权 -->
+      <div class="h-16 flex items-center justify-center">
+        <p class="text-sm">
           © {{ new Date().getFullYear() }} 版权所有
         </p>
       </div>
@@ -377,5 +399,4 @@ html {
 </style>
 
 <style scoped>
-
 </style>

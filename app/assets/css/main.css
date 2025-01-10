@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
+@import 'tailwindcss';
+@import '@nuxt/ui';
 
 :root {
   --ui-primary: var(--ui-color-primary-700);
@@ -14,5 +14,5 @@
 }
 
 body {
-  @apply bg-gray-100 dark:bg-gray-950;
+  @apply bg-gray-100 dark:bg-gray-900;
 }

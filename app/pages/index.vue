@@ -44,24 +44,57 @@
     phase?: string
   }
 
-  const schema = {
-    applicationType: {
-      required: true,
-      message: '请选择应用类型',
+  const formFields = [
+    {
+      name: 'applicationType',
+      label: '应用类型',
+      options: [
+        { label: '应急备用', value: 'emergency' },
+        { label: '主用电源', value: 'primary' },
+        { label: '并网发电', value: 'grid' },
+      ],
     },
-    powerRange: {
-      required: true,
-      message: '请选择功率范围',
+    {
+      name: 'powerRange',
+      label: '功率范围',
+      options: [
+        { label: '0-100 kVA', value: '0-100' },
+        { label: '100-300 kVA', value: '100-300' },
+        { label: '300-700 kVA', value: '300-700' },
+        { label: '700+ kVA', value: '700+' },
+      ],
     },
-    voltage: {
-      required: true,
-      message: '请选择电压等级',
+    {
+      name: 'voltage',
+      label: '电压等级',
+      options: [
+        { label: '220V/380V', value: '220-380' },
+        { label: '400V/690V', value: '400-690' },
+        { label: '6.3kV/10.5kV', value: '6300-10500' },
+      ],
     },
-    fuelType: {
-      required: true,
-      message: '请选择燃料类型',
+    {
+      name: 'fuelType',
+      label: '燃料类型',
+      options: [
+        { label: '柴油', value: 'diesel' },
+        { label: '天然气', value: 'gas' },
+        { label: '双燃料', value: 'dual' },
+      ],
     },
-  } as const
+  ]
+
+  // 动态生成 schema
+  const schema = formFields.reduce(
+    (acc, field) => {
+      acc[field.name] = {
+        required: true,
+        message: `请选择${field.label}`,
+      }
+      return acc
+    },
+    {} as Record<string, { required: boolean; message: string }>,
+  )
 
   const state = ref<FormState>({
     applicationType: '',
@@ -130,83 +163,40 @@
         </div>
       </div>
 
-      <div class="w-full lg:w-1/3">
-        <UCard>
+      <div class="w-full lg:w-1/3 flex h-auto">
+        <UCard class="w-full flex flex-col h-full">
           <template #header>
-            <h3 class="text-2xl font-bold text-center"> 机组搜索 </h3>
+            <h3 class="text-2xl font-bold text-center">机组搜索</h3>
           </template>
 
           <UForm
             :schema="schema"
             :state="state"
-            class="space-y-4"
+            class="flex flex-col flex-1 gap-4"
             @submit="onSubmit"
           >
-            <UFormGroup
-              label="应用类型"
-              name="applicationType"
-            >
-              <USelect
-                v-model="state.applicationType"
-                :options="[
-                  { label: '应急备用', value: 'emergency' },
-                  { label: '主用电源', value: 'primary' },
-                  { label: '并网发电', value: 'grid' },
-                ]"
-                placeholder="选择应用类型"
-              />
-            </UFormGroup>
-
-            <UFormGroup
-              label="功率范围"
-              name="powerRange"
-            >
-              <USelect
-                v-model="state.powerRange"
-                :options="[
-                  { label: '0-100 kVA', value: '0-100' },
-                  { label: '100-300 kVA', value: '100-300' },
-                  { label: '300-700 kVA', value: '300-700' },
-                  { label: '700+ kVA', value: '700+' },
-                ]"
-                placeholder="选择功率范围"
-              />
-            </UFormGroup>
-
-            <UFormGroup
-              label="电压等级"
-              name="voltage"
-            >
-              <USelect
-                v-model="state.voltage"
-                :options="[
-                  { label: '220V/380V', value: '220-380' },
-                  { label: '400V/690V', value: '400-690' },
-                  { label: '6.3kV/10.5kV', value: '6300-10500' },
-                ]"
-                placeholder="选择电压等级"
-              />
-            </UFormGroup>
-
-            <UFormGroup
-              label="燃料类型"
-              name="fuelType"
-            >
-              <USelect
-                v-model="state.fuelType"
-                :options="[
-                  { label: '柴油', value: 'diesel' },
-                  { label: '天然气', value: 'gas' },
-                  { label: '双燃料', value: 'dual' },
-                ]"
-                placeholder="选择燃料类型"
-              />
-            </UFormGroup>
+            <div class="flex flex-col flex-1 gap-4">
+              <UFormField
+                v-for="field in formFields"
+                :key="field.name"
+                :name="field.name"
+                :label="field.label"
+                class="grid grid-cols-[auto_1fr] items-center gap-4"
+                :ui="{
+                  labelWrapper: 'justify-center',
+                }"
+              >
+                <USelect
+                  v-model="state[field.name as keyof FormState]"
+                  :options="field.options"
+                  class="w-full"
+                />
+              </UFormField>
+            </div>
 
             <UButton
               type="submit"
               color="primary"
-              variant="solid"
               block
             >
               搜索机组

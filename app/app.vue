@@ -307,9 +307,9 @@ const footerLinks = [
 <template>
   <div class="min-h-screen flex flex-col">
     <NuxtLoadingIndicator />
-    <header class="sticky top-0 left-0 h-16 md:h-20 w-full z-50 bg-white/30 dark:bg-black/30 backdrop-blur-lg border border-white/20 dark:border-black/20">
+    <header class="sticky top-0 left-0 h-16 md:h-20 w-full z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border border-white/20 dark:border-black/20">
       <nav class="w-full h-full mx-auto px-4 flex items-center justify-between">
-          <NuxtLink to="/" class="flex">
+          <NuxtLink to="/" class="flex rounded-lg p-1 drop-shadow-sm hover:drop-shadow-md transition-all">
             <img 
               :src="logoUrl" 
               alt="GoodWind Logo" 
@@ -318,7 +318,15 @@ const footerLinks = [
           </NuxtLink>
           
           <!-- 桌面端菜单 -->
-          <UNavigationMenu variant="link" :items="menuItems" class="hidden lg:flex items-center gap-8 w-full justify-center" />
+          <UNavigationMenu 
+            variant="link" 
+            :items="menuItems" 
+            class="hidden lg:flex items-center gap-8 w-full justify-center px-4 text-shadow hover:text-shadow-lg" 
+            :ui="{
+              link: 'transition-all duration-200 hover:text-primary-500',
+              // 可以在这里添加更多自定义样式
+            }"
+          />
 
           <div class="flex items-center gap-4">
             <!-- 主题切换按钮 -->
@@ -448,6 +456,26 @@ html {
 @supports (view-transition-name: none) {
   body {
     view-transition-name: body;
+  }
+}
+
+/* 添加文字阴影工具类 */
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* 深色模式下的文字阴影 */
+@media (prefers-color-scheme: dark) {
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.15);
   }
 }
 </style>

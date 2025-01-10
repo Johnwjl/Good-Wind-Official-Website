@@ -246,20 +246,6 @@ const menuItems = ref([
   // }
 ])
 
-
-
-// 添加 bannerImages 定义
-const bannerImages = ref([
-  {
-    id: 1,
-    url: '/images/banner1.jpg',
-  },
-  {
-    id: 2,
-    url: '/images/banner2.jpg',
-  }
-])
-
 // 添加 logo 路径
 const logoUrl = '/images/logo.png'
 
@@ -323,8 +309,7 @@ const footerLinks = [
             :items="menuItems" 
             class="hidden lg:flex items-center gap-8 w-full justify-center px-4 text-shadow hover:text-shadow-lg" 
             :ui="{
-              link: 'transition-all duration-200 hover:text-primary-500',
-              // 可以在这里添加更多自定义样式
+              link: 'text-lg font-medium tracking-wide transition-all duration-200 hover:text-primary-500',
             }"
           />
 
@@ -333,7 +318,7 @@ const footerLinks = [
             <ClientOnly>
               <UButton
                 :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
-                color="primary"
+                color="neutral"
                 variant="link"
                 @click="isDark = !isDark"
               />
@@ -382,22 +367,6 @@ const footerLinks = [
         fetchpriority="high"
       >
     </section>
-    <section class="w-full relative z-10" style="aspect-ratio: 16/5;">
-      <UCarousel 
-        v-slot="{ item }" 
-        :items="bannerImages" 
-        class="w-full h-full"
-        loop 
-        :autoplay="{ delay: 3000 }"
-      >
-        <img 
-          :src="item.url" 
-          :alt="item.url"
-          class="w-full h-full object-cover"
-        >
-      </UCarousel>
-    </section>
-
     <!-- 主要内容区域 -->
     <main class="flex-1 mx-auto px-4 py-8">
       <NuxtPage />

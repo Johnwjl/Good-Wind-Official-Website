@@ -112,19 +112,19 @@
 
   <section class="mt-12">
     <div class="flex flex-col lg:flex-row gap-8">
-      <div class="w-full lg:w-2/3 rounded-lg shadow-lg overflow-hidden">
+      <div class="w-full lg:w-2/3">
         <div class="bg-gray-100 dark:bg-gray-800 aspect-video">
           <UCarousel
             v-slot="{ item }"
             :items="bannerImages"
-            class="w-full h-full"
+            fade
             :loop="true"
             :autoplay="{ delay: 3000 }"
           >
             <img
               :src="item.url"
               :alt="`Banner ${item.id}`"
-              class="w-full h-full object-cover"
+              class="w-full h-full aspect-[16/9] object-cover object-center rounded-lg shadow-lg"
             />
           </UCarousel>
         </div>

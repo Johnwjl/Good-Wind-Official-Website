@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 页面元数据设置
 useHead({
-  title: '网站标题',
+  title: '顺风发电',
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' },
     { name: 'description', content: '网站描述' },
@@ -9,13 +9,16 @@ useHead({
   ]
 })
 
-// 状态管理
 const colorMode = useColorMode()
 
-// 计算属性
-const currentIcon = computed(() => 
-  colorMode.value === 'dark' ? 'i-heroicons-sun' : 'i-heroicons-moon'
-)
+const isDark = computed({
+  get() {
+    return colorMode.value === 'dark'
+  },
+  set() {
+    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  }
+})
 
 // 菜单数据
 const menuItems1 = [
@@ -259,11 +262,52 @@ const bannerImages = ref([
 
 // 添加 logo 路径
 const logoUrl = '/images/logo.png'
+
+const footerLinks = [
+  {
+    title: '关于我们',
+    links: [
+      { text: '公司简介', url: '#' },
+      { text: '发展历程', url: '#' },
+      { text: '企业文化', url: '#' },
+      { text: '荣誉资质', url: '#' }
+    ]
+  },
+  {
+    title: '产品服务',
+    links: [
+      { text: '定点安装', url: '#' },
+      { text: '设备租赁', url: '#' },
+      { text: '技术支持', url: '#' },
+      { text: '售后服务', url: '#' }
+    ]
+  },
+  {
+    title: '新闻资讯',
+    links: [
+      { text: '公司动态', url: '#' },
+      { text: '行业新闻', url: '#' },
+      { text: '技术文章', url: '#' },
+      { text: '常见问题', url: '#' }
+    ]
+  },
+  {
+    title: '联系我们',
+    links: [
+      { text: '联系方式', url: '#' },
+      { text: '在线留言', url: '#' },
+      { text: '加入我们', url: '#' },
+      { text: '服务网点', url: '#' }
+    ]
+  }
+]
+
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col">
-    <header class="h-16 md:h-20 w-full relative z-50">
+    <NuxtLoadingIndicator />
+    <header class="sticky top-0 left-0 h-16 md:h-20 w-full z-50 bg-white/30 dark:bg-black/30 backdrop-blur-lg border border-white/20 dark:border-black/20">
       <nav class="w-full h-full mx-auto px-4 flex items-center justify-between">
           <NuxtLink to="/" class="flex">
             <img 
@@ -280,11 +324,10 @@ const logoUrl = '/images/logo.png'
             <!-- 主题切换按钮 -->
             <ClientOnly>
               <UButton
-                :icon="currentIcon"
-                color="gray"
-                variant="ghost"
-                class="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
-                @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
+                :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
+                color="primary"
+                variant="link"
+                @click="isDark = !isDark"
               />
             </ClientOnly>
             
@@ -292,7 +335,7 @@ const logoUrl = '/images/logo.png'
             <USlideover title="顺风发电官网">
               <UButton
               class="lg:hidden" 
-              icon="i-lucide-menu" color="neutral" variant="outline" 
+              icon="i-lucide-menu" color="primary" variant="link" 
               />
 
               <template #body>
@@ -322,12 +365,20 @@ const logoUrl = '/images/logo.png'
     </header>
 
     <!-- Banner区域 -->
+    <section class="w-full aspect-auto relative z-10 overflow-hidden">
+      <img 
+        src="/images/banner.gif" 
+        alt="Site Banner" 
+        class="w-full h-full object-cover object-center"
+        loading="eager"
+        fetchpriority="high"
+      >
+    </section>
     <section class="w-full relative z-10" style="aspect-ratio: 16/5;">
       <UCarousel 
         v-slot="{ item }" 
         :items="bannerImages" 
         class="w-full h-full"
-        dots 
         loop 
         :autoplay="{ delay: 3000 }"
       >
@@ -340,19 +391,22 @@ const logoUrl = '/images/logo.png'
     </section>
 
     <!-- 主要内容区域 -->
-    <main class="flex-1 container mx-auto px-4 py-8">
-      <article class="prose dark:prose-invert max-w-none">
-        <h1 class="text-3xl md:text-4xl font-bold mb-6">欢迎访问</h1>
-        <p class="text-lg">这里是网站的主要内容区域</p>
-      </article>
+    <main class="flex-1 mx-auto px-4 py-8">
+      <NuxtPage />
     </main>
 
     <!-- 页脚 -->
-    <footer class="container mx-auto h-dvh">
-      <div class="h-16 flex items-center justify-center">
-        <p class="text-sm">
-          © {{ new Date().getFullYear() }} 版权所有
-        </p>
+    <footer class="w-full mx-auto px-4 py-8">
+      <!-- 底部推荐链接 -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div v-for="(column, index) in footerLinks" :key="index" class="space-y-4 mx-auto">
+          <h3 class="text-xl font-bold mb-4">{{ column.title }}</h3>
+          <ul class="text-xl space-y-2">
+            <li v-for="(link, linkIndex) in column.links" :key="linkIndex">
+              <a :href="link.url" class="hover:text-primary-500">{{ link.text }}</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <USeparator />
       <!-- 底部版权 -->

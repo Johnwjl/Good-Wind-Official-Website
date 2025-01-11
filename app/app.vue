@@ -32,211 +32,191 @@
     },
   })
 
+  // 导航菜单配置
   const menuItems = computed(() => [
     {
       label: t('nav.fixed'),
       icon: 'i-hugeicons-installing-updates-01',
-      // to: '/getting-started',
       children: [
         {
-          label: 'Introduction',
-          description: 'Fully styled and customizable components for Nuxt.',
+          label: t('menu.introduction'),
+          description: t('descriptions.introduction'),
           icon: 'i-lucide-house',
         },
         {
-          label: 'Installation',
-          description: 'Learn how to install and configure Nuxt UI in your application.',
+          label: t('menu.installation'),
+          description: t('descriptions.installation'),
           icon: 'i-lucide-cloud-download',
         },
         {
-          label: 'Icons',
+          label: t('menu.icons'),
+          description: t('descriptions.icons'),
           icon: 'i-lucide-smile',
-          description: 'You have nothing to do, @nuxt/icon will handle it automatically.',
         },
         {
-          label: 'Colors',
+          label: t('menu.colors'),
+          description: t('descriptions.colors'),
           icon: 'i-lucide-swatch-book',
-          description: 'Choose a primary and a neutral color from your Tailwind CSS theme.',
         },
         {
-          label: 'Theme',
+          label: t('menu.theme'),
+          description: t('descriptions.theme'),
           icon: 'i-lucide-cog',
-          description:
-            'You can customize components by using the `class` / `ui` props or in your app.config.ts.',
         },
       ],
     },
     {
-      label: '移动/租赁',
+      label: t('nav.rental'),
       icon: 'i-tabler-engine',
-      // to: '/composables',
       children: [
         {
-          label: 'defineShortcuts',
+          label: t('menu.shortcuts'),
           icon: 'i-lucide-file-text',
-          description: 'Define shortcuts for your application.',
+          description: t('descriptions.shortcuts'),
           to: '/composables/define-shortcuts',
         },
         {
-          label: 'useModal',
+          label: t('menu.modal'),
           icon: 'i-lucide-file-text',
-          description: 'Display a modal within your application.',
+          description: t('descriptions.modal'),
           to: '/composables/use-modal',
         },
         {
-          label: 'useSlideover',
+          label: t('menu.slideover'),
           icon: 'i-lucide-file-text',
-          description: 'Display a slideover within your application.',
+          description: t('descriptions.slideover'),
           to: '/composables/use-slideover',
         },
         {
-          label: 'useToast',
+          label: t('menu.toast'),
           icon: 'i-lucide-file-text',
-          description: 'Display a toast within your application.',
+          description: t('descriptions.toast'),
           to: '/composables/use-toast',
         },
       ],
     },
     {
-      label: '电信应用',
+      label: t('nav.telecom'),
       icon: 'i-tdesign-system-application',
-      // to: '/components',
       active: true,
       children: [
         {
-          label: 'Link',
-          icon: 'i-lucide-file-text',
-          description: 'Use NuxtLink with superpowers.',
-          to: '/components/link',
+          label: t('menu.introduction'),
+          description: t('descriptions.introduction'),
+          icon: 'i-lucide-house',
         },
         {
-          label: 'Modal',
-          icon: 'i-lucide-file-text',
-          description: 'Display a modal within your application.',
-          to: '/components/modal',
+          label: t('menu.installation'),
+          description: t('descriptions.installation'),
+          icon: 'i-lucide-cloud-download',
         },
         {
-          label: 'NavigationMenu',
-          icon: 'i-lucide-file-text',
-          description: 'Display a list of links.',
-          to: '/components/navigation-menu',
+          label: t('menu.icons'),
+          description: t('descriptions.icons'),
+          icon: 'i-lucide-smile',
         },
         {
-          label: 'Pagination',
-          icon: 'i-lucide-file-text',
-          description: 'Display a list of pages.',
-          to: '/components/pagination',
+          label: t('menu.colors'),
+          description: t('descriptions.colors'),
+          icon: 'i-lucide-swatch-book',
         },
         {
-          label: 'Popover',
-          icon: 'i-lucide-file-text',
-          description: 'Display a non-modal dialog that floats around a trigger element.',
-          to: '/components/popover',
-        },
-        {
-          label: 'Progress',
-          icon: 'i-lucide-file-text',
-          description: 'Show a horizontal bar to indicate task progression.',
-          to: '/components/progress',
+          label: t('menu.theme'),
+          description: t('descriptions.theme'),
+          icon: 'i-lucide-cog',
         },
       ],
     },
     {
-      label: '综合发电方案',
+      label: t('nav.integrated'),
       icon: 'i-carbon-ibm-cloud-pak-integration',
-      // to: '/getting-started',
       children: [
         {
-          label: 'Introduction',
-          description: 'Fully styled and customizable components for Nuxt.',
+          label: t('menu.introduction'),
+          description: t('descriptions.introduction'),
           icon: 'i-lucide-house',
         },
         {
-          label: 'Installation',
-          description: 'Learn how to install and configure Nuxt UI in your application.',
+          label: t('menu.installation'),
+          description: t('descriptions.installation'),
           icon: 'i-lucide-cloud-download',
         },
         {
-          label: 'Icons',
+          label: t('menu.icons'),
+          description: t('descriptions.icons'),
           icon: 'i-lucide-smile',
-          description: 'You have nothing to do, @nuxt/icon will handle it automatically.',
         },
         {
-          label: 'Colors',
+          label: t('menu.colors'),
+          description: t('descriptions.colors'),
           icon: 'i-lucide-swatch-book',
-          description: 'Choose a primary and a neutral color from your Tailwind CSS theme.',
         },
         {
-          label: 'Theme',
+          label: t('menu.theme'),
+          description: t('descriptions.theme'),
           icon: 'i-lucide-cog',
-          description:
-            'You can customize components by using the `class` / `ui` props or in your app.config.ts.',
         },
       ],
     },
     {
-      label: '资源库',
+      label: t('nav.resources'),
       icon: 'i-heroicons-circle-stack',
-      // to: '/getting-started',
       children: [
         {
-          label: 'Introduction',
-          description: 'Fully styled and customizable components for Nuxt.',
+          label: t('menu.introduction'),
+          description: t('descriptions.introduction'),
           icon: 'i-lucide-house',
         },
         {
-          label: 'Installation',
-          description: 'Learn how to install and configure Nuxt UI in your application.',
+          label: t('menu.installation'),
+          description: t('descriptions.installation'),
           icon: 'i-lucide-cloud-download',
         },
         {
-          label: 'Icons',
+          label: t('menu.icons'),
+          description: t('descriptions.icons'),
           icon: 'i-lucide-smile',
-          description: 'You have nothing to do, @nuxt/icon will handle it automatically.',
         },
         {
-          label: 'Colors',
+          label: t('menu.colors'),
+          description: t('descriptions.colors'),
           icon: 'i-lucide-swatch-book',
-          description: 'Choose a primary and a neutral color from your Tailwind CSS theme.',
         },
         {
-          label: 'Theme',
+          label: t('menu.theme'),
+          description: t('descriptions.theme'),
           icon: 'i-lucide-cog',
-          description:
-            'You can customize components by using the `class` / `ui` props or in your app.config.ts.',
         },
       ],
     },
     {
-      label: '行业应用',
+      label: t('nav.industry'),
       icon: 'i-ant-design-deployment-unit-outlined',
-      // to: '/getting-started',
       children: [
         {
-          label: 'Introduction',
-          description: 'Fully styled and customizable components for Nuxt.',
+          label: t('menu.introduction'),
+          description: t('descriptions.introduction'),
           icon: 'i-lucide-house',
         },
         {
-          label: 'Installation',
-          description: 'Learn how to install and configure Nuxt UI in your application.',
+          label: t('menu.installation'),
+          description: t('descriptions.installation'),
           icon: 'i-lucide-cloud-download',
         },
         {
-          label: 'Icons',
+          label: t('menu.icons'),
+          description: t('descriptions.icons'),
           icon: 'i-lucide-smile',
-          description: 'You have nothing to do, @nuxt/icon will handle it automatically.',
         },
         {
-          label: 'Colors',
+          label: t('menu.colors'),
+          description: t('descriptions.colors'),
           icon: 'i-lucide-swatch-book',
-          description: 'Choose a primary and a neutral color from your Tailwind CSS theme.',
         },
         {
-          label: 'Theme',
+          label: t('menu.theme'),
+          description: t('descriptions.theme'),
           icon: 'i-lucide-cog',
-          description:
-            'You can customize components by using the `class` / `ui` props or in your app.config.ts.',
         },
       ],
     },
@@ -245,44 +225,44 @@
   // 添加 logo 路径
   const logoUrl = '/images/logo.png'
 
-  const footerLinks = [
+  const footerLinks = computed(() => [
     {
-      title: '关于我们',
+      title: t('footer.about.title'),
       links: [
-        { text: '公司简介', url: '#' },
-        { text: '发展历程', url: '#' },
-        { text: '企业文化', url: '#' },
-        { text: '荣誉资质', url: '#' },
+        { text: t('footer.about.company'), url: '#' },
+        { text: t('footer.about.history'), url: '#' },
+        { text: t('footer.about.culture'), url: '#' },
+        { text: t('footer.about.honors'), url: '#' },
       ],
     },
     {
-      title: '产品服务',
+      title: t('footer.services.title'),
       links: [
-        { text: '定点安装', url: '#' },
-        { text: '设备租赁', url: '#' },
-        { text: '技术支持', url: '#' },
-        { text: '售后服务', url: '#' },
+        { text: t('footer.services.fixed'), url: '#' },
+        { text: t('footer.services.rental'), url: '#' },
+        { text: t('footer.services.support'), url: '#' },
+        { text: t('footer.services.after'), url: '#' },
       ],
     },
     {
-      title: '新闻资讯',
+      title: t('footer.news.title'),
       links: [
-        { text: '公司动态', url: '#' },
-        { text: '行业新闻', url: '#' },
-        { text: '技术文章', url: '#' },
-        { text: '常见问题', url: '#' },
+        { text: t('footer.news.company'), url: '#' },
+        { text: t('footer.news.industry'), url: '#' },
+        { text: t('footer.news.technical'), url: '#' },
+        { text: t('footer.news.faq'), url: '#' },
       ],
     },
     {
-      title: '联系我们',
+      title: t('footer.contact.title'),
       links: [
-        { text: '联系方式', url: '#' },
-        { text: '在线留言', url: '#' },
-        { text: '加入我们', url: '#' },
-        { text: '服务网点', url: '#' },
+        { text: t('footer.contact.info'), url: '#' },
+        { text: t('footer.contact.message'), url: '#' },
+        { text: t('footer.contact.join'), url: '#' },
+        { text: t('footer.contact.locations'), url: '#' },
       ],
     },
-  ]
+  ])
 </script>
 
 <template>
@@ -343,20 +323,17 @@
             />
 
             <template #body>
-              <!-- 移动端菜单 -->
               <UNavigationMenu
                 variant="link"
                 orientation="vertical"
                 :items="menuItems"
                 class="w-full h-full"
                 :ui="{
-                  // 自定义子菜单样式
                   childList: 'w-full',
                   childLink:
                     'group w-full px-4 py-3 text-lg hover:bg-gray-100 dark:hover:bg-gray-800',
                   childLinkLabel: 'font-medium text-lg',
                   childLinkDescription: 'text-base text-gray-500 dark:text-gray-400',
-                  // 自定义父菜单样式
                   link: 'group w-full px-4 py-3 text-xl hover:bg-gray-100 dark:hover:bg-gray-800',
                   linkLabel: 'font-medium text-xl',
                 }"
@@ -408,7 +385,9 @@
       <USeparator />
       <!-- 底部版权 -->
       <div class="h-16 flex items-center justify-center">
-        <p class="text-sm"> © {{ new Date().getFullYear() }} 版权所有 </p>
+        <p class="text-sm">
+          {{ t('copyright', { year: new Date().getFullYear() }) }}
+        </p>
       </div>
     </footer>
   </div>

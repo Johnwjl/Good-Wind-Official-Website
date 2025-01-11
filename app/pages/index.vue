@@ -1,28 +1,29 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '#ui/types'
+  const { t } = useI18n()
 
-  const cards = [
+  const cards = computed(() => [
     {
-      title: '风力发电',
-      content: '清洁可再生能源，助力碳中和',
+      title: t('home.cards.windPower.title'),
+      content: t('home.cards.windPower.content'),
       image: '/images/wind1.png',
     },
     {
-      title: '智能控制',
-      content: '先进的自动化控制系统',
+      title: t('home.cards.smartControl.title'),
+      content: t('home.cards.smartControl.content'),
       image: '/images/wind1.png',
     },
     {
-      title: '技术创新',
-      content: '持续研发，引领行业发展',
+      title: t('home.cards.innovation.title'),
+      content: t('home.cards.innovation.content'),
       image: '/images/wind1.png',
     },
     {
-      title: '专业服务',
-      content: '全方位的技术支持和售后保障',
+      title: t('home.cards.service.title'),
+      content: t('home.cards.service.content'),
       image: '/images/wind1.png',
     },
-  ]
+  ])
 
   const bannerImages = ref([
     {
@@ -44,56 +45,58 @@
     phase?: string
   }
 
-  const formFields = [
+  const formFields = computed(() => [
     {
       name: 'applicationType',
-      label: '应用类型',
+      label: t('home.search.fields.applicationType.label'),
       options: [
-        { label: '应急备用', value: 'emergency' },
-        { label: '主用电源', value: 'primary' },
-        { label: '并网发电', value: 'grid' },
+        { label: t('home.search.fields.applicationType.emergency'), value: 'emergency' },
+        { label: t('home.search.fields.applicationType.primary'), value: 'primary' },
+        { label: t('home.search.fields.applicationType.grid'), value: 'grid' },
       ],
     },
     {
       name: 'powerRange',
-      label: '功率范围',
+      label: t('home.search.fields.powerRange.label'),
       options: [
-        { label: '0-100 kVA', value: '0-100' },
-        { label: '100-300 kVA', value: '100-300' },
-        { label: '300-700 kVA', value: '300-700' },
-        { label: '700+ kVA', value: '700+' },
+        { label: t('home.search.fields.powerRange.range1'), value: '0-100' },
+        { label: t('home.search.fields.powerRange.range2'), value: '100-300' },
+        { label: t('home.search.fields.powerRange.range3'), value: '300-700' },
+        { label: t('home.search.fields.powerRange.range4'), value: '700+' },
       ],
     },
     {
       name: 'voltage',
-      label: '电压等级',
+      label: t('home.search.fields.voltage.label'),
       options: [
-        { label: '220V/380V', value: '220-380' },
-        { label: '400V/690V', value: '400-690' },
-        { label: '6.3kV/10.5kV', value: '6300-10500' },
+        { label: t('home.search.fields.voltage.level1'), value: '220-380' },
+        { label: t('home.search.fields.voltage.level2'), value: '400-690' },
+        { label: t('home.search.fields.voltage.level3'), value: '6300-10500' },
       ],
     },
     {
       name: 'fuelType',
-      label: '燃料类型',
+      label: t('home.search.fields.fuelType.label'),
       options: [
-        { label: '柴油', value: 'diesel' },
-        { label: '天然气', value: 'gas' },
-        { label: '双燃料', value: 'dual' },
+        { label: t('home.search.fields.fuelType.diesel'), value: 'diesel' },
+        { label: t('home.search.fields.fuelType.gas'), value: 'gas' },
+        { label: t('home.search.fields.fuelType.dual'), value: 'dual' },
       ],
     },
-  ]
+  ])
 
   // 动态生成 schema
-  const schema = formFields.reduce(
-    (acc, field) => {
-      acc[field.name] = {
-        required: true,
-        message: `请选择${field.label}`,
-      }
-      return acc
-    },
-    {} as Record<string, { required: boolean; message: string }>,
+  const schema = computed(() =>
+    formFields.value.reduce(
+      (acc, field) => {
+        acc[field.name] = {
+          required: true,
+          message: t('home.search.validation.required', { field: field.label }),
+        }
+        return acc
+      },
+      {} as Record<string, { required: boolean; message: string }>,
+    ),
   )
 
   const state = ref<FormState>({
@@ -166,7 +169,7 @@
       <div class="w-full lg:w-1/3 flex h-auto">
         <UCard class="w-full flex flex-col h-full">
           <template #header>
-            <h3 class="text-2xl font-bold text-center">机组搜索</h3>
+            <h3 class="text-2xl font-bold text-center">{{ t('home.search.title') }}</h3>
           </template>
 
           <UForm
@@ -199,7 +202,7 @@
               color="primary"
               block
             >
-              搜索机组
+              {{ t('home.search.submit') }}
             </UButton>
           </UForm>
         </UCard>

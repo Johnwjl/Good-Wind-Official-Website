@@ -1,4 +1,16 @@
 <script setup lang="ts">
+  const { setLocale, t } = useI18n()
+  const items = ref([
+    { label: '中文', value: 'zh' },
+    { label: 'English', value: 'en' },
+  ])
+  const value = ref('zh')
+
+  // 直接处理语言切换事件
+  const handleLanguageChange = (newValue: string) => {
+    setLocale(newValue as 'en' | 'zh')
+  }
+
   // 页面元数据设置
   useHead({
     title: '顺风发电',
@@ -20,9 +32,9 @@
     },
   })
 
-  const menuItems = ref([
+  const menuItems = computed(() => [
     {
-      label: '定点安装',
+      label: t('nav.fixed'),
       icon: 'i-hugeicons-installing-updates-01',
       // to: '/getting-started',
       children: [
@@ -312,6 +324,15 @@
             />
           </ClientOnly>
 
+          <ClientOnly>
+            <USelect
+              v-model="value"
+              :items="items"
+              class="w-24"
+              @update:model-value="handleLanguageChange"
+            />
+          </ClientOnly>
+
           <!-- 汉堡菜单按钮 -->
           <USlideover title="顺风发电官网">
             <UButton
@@ -345,7 +366,6 @@
         </div>
       </nav>
     </header>
-
     <!-- Banner区域 -->
     <section class="w-full aspect-auto relative z-10 overflow-hidden">
       <img

@@ -47,6 +47,39 @@
 
   const formFields = computed(() => [
     {
+      name: 'fuelType',
+      label: t('home.search.fields.fuelType.label'),
+      options: [
+        { label: t('home.search.fields.fuelType.diesel'), value: 'diesel' },
+        { label: t('home.search.fields.fuelType.gas'), value: 'gas' },
+      ],
+    },
+    {
+      name: 'frequency',
+      label: t('home.search.fields.frequency.label'),
+      options: [
+        { label: t('home.search.fields.frequency.hz50'), value: 'hz50' },
+        { label: t('home.search.fields.frequency.hz60'), value: 'hz60' },
+      ],
+    },
+    {
+      name: 'phase',
+      label: t('home.search.fields.phase.label'),
+      options: [
+        { label: t('home.search.fields.phase.single'), value: 'single' },
+        { label: t('home.search.fields.phase.three'), value: 'three' },
+      ],
+    },
+    {
+      name: 'voltage',
+      label: t('home.search.fields.voltage.label'),
+      options: [
+        { label: t('home.search.fields.voltage.level1'), value: '220-380' },
+        { label: t('home.search.fields.voltage.level2'), value: '400-690' },
+        { label: t('home.search.fields.voltage.level3'), value: '6300-10500' },
+      ],
+    },
+    {
       name: 'applicationType',
       label: t('home.search.fields.applicationType.label'),
       options: [
@@ -63,24 +96,6 @@
         { label: t('home.search.fields.powerRange.range2'), value: '100-300' },
         { label: t('home.search.fields.powerRange.range3'), value: '300-700' },
         { label: t('home.search.fields.powerRange.range4'), value: '700+' },
-      ],
-    },
-    {
-      name: 'voltage',
-      label: t('home.search.fields.voltage.label'),
-      options: [
-        { label: t('home.search.fields.voltage.level1'), value: '220-380' },
-        { label: t('home.search.fields.voltage.level2'), value: '400-690' },
-        { label: t('home.search.fields.voltage.level3'), value: '6300-10500' },
-      ],
-    },
-    {
-      name: 'fuelType',
-      label: t('home.search.fields.fuelType.label'),
-      options: [
-        { label: t('home.search.fields.fuelType.diesel'), value: 'diesel' },
-        { label: t('home.search.fields.fuelType.gas'), value: 'gas' },
-        { label: t('home.search.fields.fuelType.dual'), value: 'dual' },
       ],
     },
   ])
@@ -191,7 +206,7 @@
               >
                 <USelect
                   v-model="state[field.name as keyof FormState]"
-                  :options="field.options"
+                  :items="field.options"
                   class="w-full"
                 />
               </UFormField>

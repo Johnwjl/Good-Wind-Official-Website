@@ -110,7 +110,6 @@ export default defineI18nConfig(() => ({
               label: 'Fuel Type',
               diesel: 'Diesel',
               gas: 'Natural Gas',
-              dual: 'Dual Fuel',
             },
           },
           validation: {
@@ -204,6 +203,21 @@ export default defineI18nConfig(() => ({
           title: '机组搜索',
           submit: '搜索机组',
           fields: {
+            fuelType: {
+              label: '燃料类型',
+              diesel: '柴油',
+              gas: '燃气',
+            },
+            frequency: {
+              label: '频率类型',
+              hz50: '50赫兹',
+              hz60: '60赫兹',
+            },
+            phase: {
+              label: '相位类型',
+              single: '单相',
+              three: '三相',
+            },
             applicationType: {
               label: '应用类型',
               emergency: '应急备用',
@@ -222,12 +236,6 @@ export default defineI18nConfig(() => ({
               level1: '220V/380V',
               level2: '400V/690V',
               level3: '6.3kV/10.5kV',
-            },
-            fuelType: {
-              label: '燃料类型',
-              diesel: '柴油',
-              gas: '天然气',
-              dual: '双燃料',
             },
           },
           validation: {

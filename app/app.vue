@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  const { setLocale, t } = useI18n()
+  const { setLocale, t, locale } = useI18n()
   const items = ref([
     { label: '中文', value: 'zh' },
     { label: 'English', value: 'en' },
   ])
-  const value = ref('zh')
+  const value = ref(locale.value)
 
   // 直接处理语言切换事件
   const handleLanguageChange = (newValue: string) => {

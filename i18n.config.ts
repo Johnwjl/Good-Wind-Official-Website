@@ -111,6 +111,18 @@ export default defineI18nConfig(() => ({
               diesel: 'Diesel',
               gas: 'Natural Gas',
             },
+            frequency: {
+              label: 'Frequency',
+              hz50: '50Hz',
+              hz60: '60Hz',
+              placeholder: 'Select Frequency',
+            },
+            phase: {
+              label: 'Phase',
+              single: 'Single Phase',
+              three: 'Three Phase',
+              placeholder: 'Select Phase',
+            },
           },
           validation: {
             required: 'Please select {field}',
@@ -207,22 +219,26 @@ export default defineI18nConfig(() => ({
               label: '燃料类型',
               diesel: '柴油',
               gas: '燃气',
+              placeholder: '请选择燃料类型',
             },
             frequency: {
               label: '频率类型',
               hz50: '50赫兹',
               hz60: '60赫兹',
+              placeholder: '请选择频率',
             },
             phase: {
               label: '相位类型',
               single: '单相',
               three: '三相',
+              placeholder: '请选择相位',
             },
             applicationType: {
               label: '应用类型',
               emergency: '应急备用',
               primary: '主用电源',
               grid: '并网发电',
+              placeholder: '请选择应用类型',
             },
             powerRange: {
               label: '功率范围',
@@ -230,12 +246,14 @@ export default defineI18nConfig(() => ({
               range2: '100-300 kVA',
               range3: '300-700 kVA',
               range4: '700+ kVA',
+              placeholder: '请选择功率范围',
             },
             voltage: {
               label: '电压等级',
               level1: '220V/380V',
               level2: '400V/690V',
               level3: '6.3kV/10.5kV',
+              placeholder: '请选择电压等级',
             },
           },
           validation: {

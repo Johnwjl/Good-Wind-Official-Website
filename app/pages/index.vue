@@ -53,6 +53,7 @@
         { label: t('home.search.fields.fuelType.diesel'), value: 'diesel' },
         { label: t('home.search.fields.fuelType.gas'), value: 'gas' },
       ],
+      icon: 'i-custom-gas-station',
     },
     {
       name: 'frequency',
@@ -61,6 +62,7 @@
         { label: t('home.search.fields.frequency.hz50'), value: 'hz50' },
         { label: t('home.search.fields.frequency.hz60'), value: 'hz60' },
       ],
+      icon: 'i-custom-frequency',
     },
     {
       name: 'phase',
@@ -69,6 +71,7 @@
         { label: t('home.search.fields.phase.single'), value: 'single' },
         { label: t('home.search.fields.phase.three'), value: 'three' },
       ],
+      icon: 'i-custom-phase',
     },
     {
       name: 'voltage',
@@ -78,6 +81,7 @@
         { label: t('home.search.fields.voltage.level2'), value: '400-690' },
         { label: t('home.search.fields.voltage.level3'), value: '6300-10500' },
       ],
+      icon: 'i-custom-voltage',
     },
     {
       name: 'applicationType',
@@ -87,6 +91,7 @@
         { label: t('home.search.fields.applicationType.primary'), value: 'primary' },
         { label: t('home.search.fields.applicationType.grid'), value: 'grid' },
       ],
+      icon: 'i-custom-application-type',
     },
     {
       name: 'powerRange',
@@ -97,6 +102,7 @@
         { label: t('home.search.fields.powerRange.range3'), value: '300-700' },
         { label: t('home.search.fields.powerRange.range4'), value: '700+' },
       ],
+      icon: 'i-custom-power-range',
     },
   ])
 
@@ -204,6 +210,15 @@
                   labelWrapper: 'justify-center',
                 }"
               >
+                <template #label>
+                  <div class="flex items-center gap-2">
+                    <UIcon
+                      :name="field.icon"
+                      class="size-5"
+                    />
+                    {{ field.label }}
+                  </div>
+                </template>
                 <USelect
                   v-model="state[field.name as keyof FormState]"
                   :items="field.options"

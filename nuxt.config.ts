@@ -11,10 +11,16 @@ export default defineNuxtConfig({
     fonts: false,
   },
   css: ['~/assets/css/main.css'],
-
   future: {
     compatibilityVersion: 4,
   },
-
   compatibilityDate: '2024-11-27',
+  icon: {
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: './app/assets/icons',
+      },
+    ],
+  },
 })

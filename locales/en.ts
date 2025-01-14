@@ -1,11 +1,14 @@
 export default {
+  site: {
+    title: 'Good Wind Power',
+  },
   nav: {
-    fixed: 'Fixed-point Installation',
-    rental: 'Moving/Rental',
-    telecom: 'Telecom Applications',
-    integrated: 'Integrated Power Solutions',
-    resources: 'Resources',
-    industry: 'Industry Applications',
+    fixed: 'On-Site Power',
+    rental: 'Mobile Power',
+    telecom: 'Telecom Power',
+    integrated: 'Power Solutions',
+    resources: 'Support',
+    industry: 'Industries',
   },
   menu: {
     introduction: 'Introduction',

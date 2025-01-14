@@ -269,54 +269,70 @@
   <div class="min-h-screen flex flex-col">
     <NuxtLoadingIndicator />
     <header
-      class="sticky top-0 left-0 h-16 md:h-20 w-full z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border border-white/20 dark:border-black/20"
+      class="sticky top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border border-white/20 dark:border-black/20"
+      :class="[
+        'h-[clamp(3.5rem,10vw,5rem)]', // 动态高度，最小56px，最大80px
+      ]"
     >
-      <nav class="w-full h-full mx-auto px-4 flex items-center justify-between">
+      <nav
+        class="w-full h-full mx-auto px-[clamp(1rem,3vw,2rem)] flex items-center justify-between"
+      >
         <NuxtLink
           to="/"
-          class="flex rounded-lg p-1 drop-shadow-sm hover:drop-shadow-md transition-all"
+          class="flex rounded-lg p-[clamp(0.25rem,1vw,0.5rem)] drop-shadow-sm hover:drop-shadow-md transition-all"
         >
           <img
             :src="logoUrl"
             alt="GoodWind Logo"
-            class="h-8 md:h-10 w-auto"
+            class="h-[clamp(2rem,6vw,2.5rem)] w-auto"
           />
         </NuxtLink>
 
-        <!-- 桌面端菜单 -->
+        <!-- 修改桌面端菜单显示逻辑 -->
         <UNavigationMenu
           variant="link"
           :items="menuItems"
-          class="hidden lg:flex items-center gap-8 w-full justify-center px-4 text-shadow hover:text-shadow-lg"
+          class="hidden 2xl:flex items-center gap-[clamp(1rem,2vw,2rem)] w-full justify-center px-[clamp(1rem,3vw,2rem)]"
           :ui="{
-            link: 'text-lg font-medium tracking-wide transition-all duration-200 hover:text-primary-500',
+            item: 'text-[clamp(0.875rem,1.1vw,1rem)]',
+            link: 'gap-[0.5em]',
+            linkLeadingIcon: 'text-[1em]',
           }"
         />
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-[clamp(0.75rem,2vw,1rem)]">
           <!-- 主题切换按钮 -->
           <ClientOnly>
             <UButton
               :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
               color="neutral"
               variant="link"
+              class="text-[clamp(1.25rem,1.5vw,1.5rem)]"
               @click="isDark = !isDark"
             />
           </ClientOnly>
 
+          <!-- 语言选择器 -->
           <ClientOnly>
             <USelect
               v-model="value"
               :items="items"
-              class="w-24"
+              class="w-[clamp(5rem,8vw,6rem)]"
+              size="sm"
               @update:model-value="handleLanguageChange"
             />
           </ClientOnly>
 
-          <!-- 汉堡菜单按钮 -->
-          <USlideover title="顺风发电官网">
+          <!-- 修改汉堡菜单按钮的显示逻辑 -->
+          <USlideover
+            :title="t('site.title')"
+            :ui="{
+              header: 'text-[clamp(1rem,1.2vw,1.25rem)]',
+              overlay: 'backdrop-blur-sm',
+            }"
+          >
             <UButton
-              class="lg:hidden"
+              class="2xl:hidden text-[clamp(1.5rem,2vw,1.75rem)]"
               icon="i-lucide-menu"
               color="primary"
               variant="link"
@@ -331,11 +347,12 @@
                 :ui="{
                   childList: 'w-full',
                   childLink:
-                    'group w-full px-4 py-3 text-lg hover:bg-gray-100 dark:hover:bg-gray-800',
-                  childLinkLabel: 'font-medium text-lg',
-                  childLinkDescription: 'text-base text-gray-500 dark:text-gray-400',
-                  link: 'group w-full px-4 py-3 text-xl hover:bg-gray-100 dark:hover:bg-gray-800',
-                  linkLabel: 'font-medium text-xl',
+                    'group w-full px-4 py-3 text-[clamp(1rem,1.2vw,1.25rem)] hover:bg-gray-100 dark:hover:bg-gray-800',
+                  childLinkLabel: 'font-medium',
+                  childLinkDescription:
+                    'text-[clamp(0.875rem,1.1vw,1rem)] text-gray-500 dark:text-gray-400',
+                  link: 'group w-full px-4 py-3 text-[clamp(1.125rem,1.3vw,1.5rem)] hover:bg-gray-100 dark:hover:bg-gray-800',
+                  linkLabel: 'font-medium',
                 }"
               />
             </template>
@@ -359,33 +376,41 @@
     </main>
 
     <!-- 页脚 -->
-    <footer class="w-full mx-auto px-4 py-8">
+    <footer class="w-full mx-auto px-[clamp(1rem,3vw,2rem)] py-[clamp(2rem,4vw,3rem)]">
       <!-- 底部推荐链接 -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <div class="flex justify-center w-full">
         <div
-          v-for="(column, index) in footerLinks"
-          :key="index"
-          class="space-y-4 mx-auto"
+          class="grid w-full max-w-[min(1200px,90vw)] gap-[clamp(2rem,4vw,3rem)]"
+          :class="[
+            'grid-cols-2 md:grid-cols-4', // 在中等屏幕以上使用4列，小屏使用2列
+            'auto-rows-auto', // 自动行高
+          ]"
         >
-          <h3 class="text-xl font-bold mb-4">{{ column.title }}</h3>
-          <ul class="text-xl space-y-2">
-            <li
-              v-for="(link, linkIndex) in column.links"
-              :key="linkIndex"
-            >
-              <a
-                :href="link.url"
-                class="hover:text-primary-500"
-                >{{ link.text }}</a
+          <div
+            v-for="(column, index) in footerLinks"
+            :key="index"
+            class="flex flex-col space-y-[clamp(0.75rem,2vw,1.5rem)]"
+          >
+            <h3 class="text-[clamp(1rem,1.2vw,1.25rem)] font-bold">{{ column.title }}</h3>
+            <ul class="space-y-[clamp(0.5rem,1vw,0.75rem)]">
+              <li
+                v-for="(link, linkIndex) in column.links"
+                :key="linkIndex"
               >
-            </li>
-          </ul>
+                <a
+                  :href="link.url"
+                  class="text-[clamp(0.875rem,1.1vw,1rem)] hover:text-primary-500 transition-colors duration-200"
+                  >{{ link.text }}</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      <USeparator />
+      <USeparator class="my-[clamp(1.5rem,3vw,2rem)]" />
       <!-- 底部版权 -->
-      <div class="h-16 flex items-center justify-center">
-        <p class="text-sm">
+      <div class="h-[clamp(3rem,4vw,4rem)] flex items-center justify-center">
+        <p class="text-[clamp(0.75rem,1vw,0.875rem)]">
           {{ t('copyright', { year: new Date().getFullYear() }) }}
         </p>
       </div>

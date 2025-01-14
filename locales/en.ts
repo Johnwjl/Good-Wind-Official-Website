@@ -1,6 +1,10 @@
 export default {
   site: {
     title: 'Good Wind',
+    languages: {
+      zh: 'Chinese',
+      en: 'English',
+    },
   },
   nav: {
     fixed: 'On-Site Power',

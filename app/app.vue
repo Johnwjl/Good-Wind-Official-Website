@@ -1,12 +1,13 @@
 <script setup lang="ts">
   const { setLocale, t, locale } = useI18n()
-  const items = ref([
-    { label: '中文', value: 'zh' },
-    { label: 'English', value: 'en' },
+
+  const items = computed(() => [
+    { label: t('site.languages.zh'), value: 'zh' },
+    { label: t('site.languages.en'), value: 'en' },
   ])
+
   const value = ref(locale.value)
 
-  // 直接处理语言切换事件
   const handleLanguageChange = (newValue: string) => {
     setLocale(newValue as 'en' | 'zh')
   }
@@ -267,21 +268,19 @@
     <NuxtLoadingIndicator />
     <header
       class="sticky top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm border border-white/20 dark:border-black/20"
-      :class="[
-        'h-[clamp(3.5rem,10vw,5rem)]', // 动态高度，最小56px，最大80px
-      ]"
+      :class="['h-[clamp(3.5rem,5vh,5rem)]']"
     >
       <nav
-        class="w-full h-full mx-auto px-[clamp(1rem,3vw,2rem)] flex items-center justify-between"
+        class="w-full h-full mx-auto px-[clamp(1rem,2vw,2rem)] flex items-center justify-between"
       >
         <NuxtLink
           to="/"
-          class="flex items-center gap-[clamp(0.5rem,1.5vw,1rem)] rounded-lg p-[clamp(0.25rem,1vw,0.5rem)] drop-shadow-sm hover:drop-shadow-md transition-all"
+          class="flex items-center gap-[clamp(0.25rem,1vw,0.75rem)] rounded-lg p-[clamp(0.25rem,0.5vw,0.5rem)]"
         >
           <img
             src="/images/logo.svg"
             alt="GoodWind Logo"
-            class="w-[clamp(2rem,6vw,3rem)] aspect-square object-contain"
+            class="w-[clamp(2rem,4vw,3rem)]"
             width="50"
             height="50"
             loading="eager"
@@ -291,34 +290,34 @@
             class="font-bold tracking-wide whitespace-nowrap transition-colors duration-300 text-primary-600 dark:text-primary-400"
             :class="
               locale === 'en'
-                ? 'text-[clamp(1rem,2vw,1.75rem)]'
-                : 'text-[clamp(1.25rem,2.5vw,2rem)]'
+                ? 'text-[clamp(0.875rem,1.5vw,1.5rem)]'
+                : 'text-[clamp(1rem,1.75vw,1.75rem)]'
             "
           >
             {{ t('site.title') }}
           </span>
         </NuxtLink>
 
-        <!-- 修改桌面端菜单显示逻辑 -->
+        <!-- 桌面端导航菜单 -->
         <UNavigationMenu
           variant="link"
           :items="menuItems"
-          class="hidden 2xl:flex items-center gap-[clamp(1rem,2vw,2rem)] w-full justify-center px-[clamp(1rem,3vw,2rem)]"
+          class="hidden 2xl:flex items-center gap-[clamp(0.5rem,1.5vw,1.5rem)] w-full justify-center px-[clamp(0.5rem,2vw,1.5rem)]"
           :ui="{
-            item: 'text-[clamp(0.875rem,1.1vw,1rem)]',
-            link: 'gap-[0.5em]',
+            item: 'text-[clamp(0.75rem,1vw,1rem)]',
+            link: 'gap-[0.35em]',
             linkLeadingIcon: 'text-[1em]',
           }"
         />
 
-        <div class="flex items-center gap-[clamp(0.75rem,2vw,1rem)]">
+        <div class="flex items-center gap-[clamp(0.5rem,1vw,1rem)]">
           <!-- 主题切换按钮 -->
           <ClientOnly>
             <UButton
               :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
               color="neutral"
               variant="link"
-              class="text-[clamp(1.25rem,1.5vw,1.5rem)]"
+              class="text-[clamp(1rem,1.25vw,1.25rem)]"
               @click="isDark = !isDark"
             />
           </ClientOnly>
@@ -328,22 +327,22 @@
             <USelect
               v-model="value"
               :items="items"
-              class="w-[clamp(5rem,8vw,6rem)]"
+              class="w-[clamp(5rem,7vw,6rem)]"
               size="sm"
               @update:model-value="handleLanguageChange"
             />
           </ClientOnly>
 
-          <!-- 修改汉堡菜单按钮的显示逻辑 -->
+          <!-- 移动端菜单 -->
           <USlideover
             :title="t('site.title')"
             :ui="{
-              header: 'text-[clamp(1rem,1.2vw,1.25rem)]',
+              header: 'text-[clamp(0.875rem,1.1vw,1.125rem)]',
               overlay: 'backdrop-blur-sm',
             }"
           >
             <UButton
-              class="2xl:hidden text-[clamp(1.5rem,2vw,1.75rem)]"
+              class="2xl:hidden text-[clamp(1.25rem,1.5vw,1.5rem)]"
               icon="i-lucide-menu"
               color="primary"
               variant="link"
@@ -358,11 +357,11 @@
                 :ui="{
                   childList: 'w-full',
                   childLink:
-                    'group w-full px-4 py-3 text-[clamp(1rem,1.2vw,1.25rem)] hover:bg-gray-100 dark:hover:bg-gray-800',
+                    'group w-full px-3 py-2 text-[clamp(0.875rem,1.1vw,1.125rem)] hover:bg-gray-100 dark:hover:bg-gray-800',
                   childLinkLabel: 'font-medium',
                   childLinkDescription:
-                    'text-[clamp(0.875rem,1.1vw,1rem)] text-gray-500 dark:text-gray-400',
-                  link: 'group w-full px-4 py-3 text-[clamp(1.125rem,1.3vw,1.5rem)] hover:bg-gray-100 dark:hover:bg-gray-800',
+                    'text-[clamp(0.75rem,1vw,0.875rem)] text-gray-500 dark:text-gray-400',
+                  link: 'group w-full px-3 py-2 text-[clamp(1rem,1.2vw,1.25rem)] hover:bg-gray-100 dark:hover:bg-gray-800',
                   linkLabel: 'font-medium',
                 }"
               />

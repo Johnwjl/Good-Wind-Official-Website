@@ -1,6 +1,10 @@
 export default {
   site: {
     title: '顺风发电',
+    languages: {
+      zh: '中文',
+      en: '英文',
+    },
   },
   nav: {
     fixed: '定点安装',

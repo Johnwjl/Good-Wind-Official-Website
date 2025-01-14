@@ -12,14 +12,14 @@
   }
 
   // 页面元数据设置
-  useHead({
-    title: '顺风发电',
+  useHead(() => ({
+    title: t('site.title'),
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' },
       { name: 'description', content: '网站描述' },
       { name: 'keywords', content: '关键词1,关键词2' },
     ],
-  })
+  }))
 
   const colorMode = useColorMode()
 
@@ -222,9 +222,6 @@
     },
   ])
 
-  // 添加 logo 路径
-  const logoUrl = '/images/logo.png'
-
   const footerLinks = computed(() => [
     {
       title: t('footer.about.title'),
@@ -279,12 +276,16 @@
       >
         <NuxtLink
           to="/"
-          class="flex rounded-lg p-[clamp(0.25rem,1vw,0.5rem)] drop-shadow-sm hover:drop-shadow-md transition-all"
+          class="flex items-center rounded-lg p-[clamp(0.25rem,1vw,0.5rem)] drop-shadow-sm hover:drop-shadow-md transition-all"
         >
           <img
-            :src="logoUrl"
+            src="/images/logo.svg"
             alt="GoodWind Logo"
-            class="h-[clamp(2rem,6vw,2.5rem)] w-auto"
+            class="w-[clamp(2rem,6vw,3rem)] aspect-square object-contain"
+            width="50"
+            height="50"
+            loading="eager"
+            decoding="async"
           />
         </NuxtLink>
 
@@ -363,7 +364,7 @@
     <!-- Banner区域 -->
     <section class="w-full aspect-auto relative z-10 overflow-hidden">
       <img
-        src="/images/banner.gif"
+        src="/images/banner.webp"
         alt="Site Banner"
         class="w-full h-full object-cover object-center"
         loading="eager"

@@ -276,7 +276,7 @@
       >
         <NuxtLink
           to="/"
-          class="flex items-center rounded-lg p-[clamp(0.25rem,1vw,0.5rem)] drop-shadow-sm hover:drop-shadow-md transition-all"
+          class="flex items-center gap-[clamp(0.5rem,1.5vw,1rem)] rounded-lg p-[clamp(0.25rem,1vw,0.5rem)] drop-shadow-sm hover:drop-shadow-md transition-all"
         >
           <img
             src="/images/logo.svg"
@@ -287,6 +287,16 @@
             loading="eager"
             decoding="async"
           />
+          <span
+            class="font-bold tracking-wide whitespace-nowrap transition-colors duration-300 text-primary-600 dark:text-primary-400"
+            :class="
+              locale === 'en'
+                ? 'text-[clamp(1rem,2vw,1.75rem)]'
+                : 'text-[clamp(1.25rem,2.5vw,2rem)]'
+            "
+          >
+            {{ t('site.title') }}
+          </span>
         </NuxtLink>
 
         <!-- 修改桌面端菜单显示逻辑 -->

@@ -1,6 +1,6 @@
 export default {
   site: {
-    title: 'Good Wind Power',
+    title: 'Good Wind',
   },
   nav: {
     fixed: 'On-Site Power',

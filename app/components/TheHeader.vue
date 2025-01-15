@@ -245,7 +245,7 @@
       <UNavigationMenu
         variant="link"
         :items="menuItems"
-        class="hidden 2xl:flex items-center gap-[clamp(0.5rem,1.5vw,1.5rem)] w-full justify-center px-[clamp(0.5rem,2vw,1.5rem)]"
+        class="hidden min-[1440px]:flex items-center gap-[clamp(0.5rem,1.5vw,1.5rem)] w-full justify-center px-[clamp(0.5rem,2vw,1.5rem)]"
         :ui="{
           item: 'text-[clamp(0.75rem,1vw,1rem)]',
           link: 'gap-[0.35em]',
@@ -270,7 +270,12 @@
           <USelect
             v-model="value"
             :items="items"
-            class="w-[clamp(5rem,7vw,6rem)]"
+            class="w-auto min-w-[4.5rem]"
+            :ui="{
+              base: 'h-8',
+              value: 'text-sm',
+              item: 'text-sm',
+            }"
             size="sm"
             @update:model-value="handleLanguageChange"
           />

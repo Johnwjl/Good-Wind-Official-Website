@@ -6,8 +6,16 @@
     title: t('site.title'),
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' },
-      { name: 'description', content: '网站描述' },
-      { name: 'keywords', content: '关键词1,关键词2' },
+      {
+        name: 'description',
+        content:
+          '固定式发电机组、租赁发电机组、通信电源、集成供能解决方案的专业供应商，提供全方位的发电机组销售、租赁、维修保养等服务',
+      },
+      {
+        name: 'keywords',
+        content:
+          '固定式发电机组,租赁发电机组,通信电源,集成供能,发电机组销售,发电机组租赁,发电机组维修,发电机组保养',
+      },
     ],
   }))
 

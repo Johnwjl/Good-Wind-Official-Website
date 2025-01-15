@@ -1,38 +1,42 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '#ui/types'
+  import banner1 from '~/assets/img/banner1.jpg'
+  import banner2 from '~/assets/img/banner2.jpg'
+  import wind1 from '~/assets/img/wind1.png'
+
   const { t } = useI18n()
 
   const cards = computed(() => [
     {
       title: t('home.cards.windPower.title'),
       content: t('home.cards.windPower.content'),
-      image: '/images/wind1.png',
+      image: wind1,
     },
     {
       title: t('home.cards.smartControl.title'),
       content: t('home.cards.smartControl.content'),
-      image: '/images/wind1.png',
+      image: wind1,
     },
     {
       title: t('home.cards.innovation.title'),
       content: t('home.cards.innovation.content'),
-      image: '/images/wind1.png',
+      image: wind1,
     },
     {
       title: t('home.cards.service.title'),
       content: t('home.cards.service.content'),
-      image: '/images/wind1.png',
+      image: wind1,
     },
   ])
 
   const bannerImages = ref([
     {
       id: 1,
-      url: '/images/banner1.jpg',
+      url: banner1,
     },
     {
       id: 2,
-      url: '/images/banner2.jpg',
+      url: banner2,
     },
   ])
 

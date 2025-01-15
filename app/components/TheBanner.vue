@@ -17,7 +17,7 @@
 <template>
   <section class="w-full aspect-auto relative z-10 overflow-hidden">
     <img
-      src="/images/banner.webp"
+      src="~/assets/img/banner.webp"
       alt="Site Banner"
       class="w-full h-full object-cover object-center"
       loading="eager"

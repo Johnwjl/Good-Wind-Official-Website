@@ -1,6 +1,8 @@
 export default {
   site: {
     title: '顺风发电',
+    slogon1: '扬州顺风发电设备有限公司',
+    slogon2: '无限动力 · 成就非凡',
     languages: {
       zh: '中文',
       en: '英文',

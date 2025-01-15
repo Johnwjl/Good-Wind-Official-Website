@@ -25,12 +25,8 @@
   const colorMode = useColorMode()
 
   const isDark = computed({
-    get() {
-      return colorMode.value === 'dark'
-    },
-    set() {
-      colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-    },
+    get: () => colorMode.value === 'dark',
+    set: () => (colorMode.preference = isDark.value ? 'light' : 'dark'),
   })
 
   // 导航菜单配置
@@ -370,16 +366,9 @@
         </div>
       </nav>
     </header>
-    <!-- Banner区域 -->
-    <section class="w-full aspect-auto relative z-10 overflow-hidden">
-      <img
-        src="/images/banner.webp"
-        alt="Site Banner"
-        class="w-full h-full object-cover object-center"
-        loading="eager"
-        fetchpriority="high"
-      />
-    </section>
+    <!-- 使用正确的组件名 TheBanner -->
+    <TheBanner />
+
     <!-- 主要内容区域 -->
     <main class="flex-1 mx-auto px-4 py-8">
       <NuxtPage />
@@ -479,5 +468,81 @@
     .text-shadow-lg {
       text-shadow: 0 2px 4px rgba(255, 255, 255, 0.15);
     }
+  }
+
+  /* 增强文字阴影效果 */
+  .text-shadow-xl {
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 优化过渡动画 */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-enter-from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  /* 纯透明度过渡，禁用所有 transform */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+    transform: none !important; /* 禁用 Vue transition 的默认 transform 行为 */
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+    transform: none !important;
+  }
+
+  .fade-enter-to,
+  .fade-leave-from {
+    opacity: 1;
+    transform: none !important;
+  }
+
+  /* 简化 Banner 文字效果 */
+  .banner-text {
+    /* 保留核心文字阴影效果 */
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.2);
+
+    /* 移除多余的滤镜效果 */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    /* 移除复杂的渐变，使用简单的颜色 */
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* 简化 Banner 文字切换动画 */
+  .banner-transition-enter-active,
+  .banner-transition-leave-active {
+    transition: all 0.4s ease;
+    position: absolute;
+    width: 100%;
+  }
+
+  .banner-transition-enter-from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .banner-transition-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 </style>

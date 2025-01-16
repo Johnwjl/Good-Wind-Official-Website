@@ -110,6 +110,7 @@
         </p>
       </div>
     </footer>
+    <TheSocialBar />
   </div>
 </template>
 

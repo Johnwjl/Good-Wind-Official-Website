@@ -84,7 +84,7 @@
     },
     {
       label: t('nav.telecom'),
-      icon: 'i-custom-system-application',
+      icon: 'i-custom-application',
       active: true,
       children: [
         {

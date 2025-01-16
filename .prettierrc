@@ -11,5 +11,13 @@
   "endOfLine": "lf",
   "singleAttributePerLine": true,
   "vueIndentScriptAndStyle": true,
-  "htmlWhitespaceSensitivity": "strict"
+  "htmlWhitespaceSensitivity": "strict",
+  "overrides": [
+    {
+      "files": ["*.svg"],
+      "options": {
+        "parser": "html"
+      }
+    }
+  ]
 }

@@ -92,27 +92,8 @@ export default {
       title: 'Generator Search',
       submit: 'Search Generator',
       fields: {
-        applicationType: {
-          label: 'Application Type',
-          emergency: 'Emergency Backup',
-          primary: 'Primary Power',
-          grid: 'Grid Connection',
-        },
-        powerRange: {
-          label: 'Power Range',
-          range1: '0-100 kVA',
-          range2: '100-300 kVA',
-          range3: '300-700 kVA',
-          range4: '700+ kVA',
-        },
-        voltage: {
-          label: 'Voltage Level',
-          level1: '220V/380V',
-          level2: '400V/690V',
-          level3: '6.3kV/10.5kV',
-        },
         fuelType: {
-          label: 'Fuel Type',
+          label: 'Fuel',
           diesel: 'Diesel',
           gas: 'Natural Gas',
         },
@@ -127,6 +108,25 @@ export default {
           single: 'Single Phase',
           three: 'Three Phase',
           placeholder: 'Select Phase',
+        },
+        voltage: {
+          label: 'Voltage',
+          level1: '220V/380V',
+          level2: '400V/690V',
+          level3: '6.3kV/10.5kV',
+        },
+        applicationType: {
+          label: 'Application',
+          emergency: 'Emergency Backup',
+          primary: 'Primary Power',
+          grid: 'Grid Connection',
+        },
+        powerRange: {
+          label: 'Power',
+          range1: '0-100 kVA',
+          range2: '100-300 kVA',
+          range3: '300-700 kVA',
+          range4: '700+ kVA',
         },
       },
       validation: {

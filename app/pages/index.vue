@@ -1,8 +1,11 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '#ui/types'
-  import banner1 from '~/assets/img/banner1.jpg'
-  import banner2 from '~/assets/img/banner2.jpg'
-  import wind1 from '~/assets/img/wind1.png'
+  // import banner1 from '~/assets/img/banner1.jpg'
+  // import banner2 from '~/assets/img/banner2.jpg'
+  import c02 from '~/assets/img/c02.jpg'
+  import c03 from '~/assets/img/c03.jpg'
+  import c04 from '~/assets/img/c04.jpg'
+  import c05 from '~/assets/img/c05.jpg'
 
   const { t } = useI18n()
 
@@ -10,35 +13,35 @@
     {
       title: t('home.cards.windPower.title'),
       content: t('home.cards.windPower.content'),
-      image: wind1,
+      image: c02,
     },
     {
       title: t('home.cards.smartControl.title'),
       content: t('home.cards.smartControl.content'),
-      image: wind1,
+      image: c03,
     },
     {
       title: t('home.cards.innovation.title'),
       content: t('home.cards.innovation.content'),
-      image: wind1,
+      image: c04,
     },
     {
       title: t('home.cards.service.title'),
       content: t('home.cards.service.content'),
-      image: wind1,
+      image: c05,
     },
   ])
 
-  const bannerImages = ref([
-    {
-      id: 1,
-      url: banner1,
-    },
-    {
-      id: 2,
-      url: banner2,
-    },
-  ])
+  // const bannerImages = ref([
+  //   {
+  //     id: 1,
+  //     url: banner1,
+  //   },
+  //   {
+  //     id: 2,
+  //     url: banner2,
+  //   },
+  // ])
 
   interface FormState {
     applicationType: string
@@ -175,7 +178,7 @@
     <div class="flex flex-col lg:flex-row gap-8">
       <div class="w-full lg:w-2/3">
         <div class="bg-gray-100 dark:bg-gray-800 aspect-video">
-          <UCarousel
+          <!-- <UCarousel
             v-slot="{ item }"
             :items="bannerImages"
             fade
@@ -187,7 +190,14 @@
               :alt="`Banner ${item.id}`"
               class="w-full h-full aspect-[16/9] object-cover object-center rounded-lg shadow-lg"
             />
-          </UCarousel>
+          </UCarousel> -->
+          <img
+            src="~/assets/img/banner3.webp"
+            alt="Banner"
+            class="w-full h-full aspect-[16/9] object-cover object-center rounded-lg shadow-lg"
+            loading="eager"
+            fetchpriority="high"
+          />
         </div>
       </div>
 

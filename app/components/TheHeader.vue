@@ -290,7 +290,7 @@
           }"
         >
           <UButton
-            class="2xl:hidden text-[clamp(1.25rem,1.5vw,1.5rem)]"
+            class="min-[1440px]:hidden text-[clamp(1.25rem,1.5vw,1.5rem)]"
             icon="i-custom-lucide-menu"
             color="primary"
             variant="link"

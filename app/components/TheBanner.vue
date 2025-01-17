@@ -41,17 +41,15 @@
         >
           <h2
             :key="currentTextIndex"
-            class="text-white/95 font-medium tracking-wider banner-text text-center"
+            class="text-white/95 font-medium tracking-wider banner-text text-center px-4 leading-[1.2]"
             :class="[
               locale === 'en'
                 ? currentTextIndex === 0
-                  ? 'text-[clamp(2rem,4vw,4rem)]'
-                  : 'text-[clamp(2.5rem,5vw,5rem)]'
+                  ? 'text-[clamp(1.5rem,3vw+1rem,4rem)]'
+                  : 'text-[clamp(1.75rem,4vw+1rem,5rem)]'
                 : currentTextIndex === 0
-                  ? 'text-[clamp(2.5rem,6vw,5rem)]'
-                  : 'text-[clamp(3rem,7vw,6rem)]',
-              'leading-[1.2]',
-              'px-4',
+                  ? 'text-[clamp(2rem,4vw+1rem,5rem)]'
+                  : 'text-[clamp(2.25rem,5vw+1rem,6rem)]',
             ]"
           >
             {{ currentTextIndex === 0 ? t('site.slogon1') : t('site.slogon2') }}

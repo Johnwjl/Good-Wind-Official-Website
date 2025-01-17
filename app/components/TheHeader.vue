@@ -257,7 +257,7 @@
         <!-- 主题切换按钮 -->
         <ClientOnly>
           <UButton
-            :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
+            :icon="isDark ? 'i-custom-lucide-moon' : 'i-custom-lucide-sun'"
             color="neutral"
             variant="link"
             class="text-[clamp(1rem,1.25vw,1.25rem)]"
@@ -291,7 +291,7 @@
         >
           <UButton
             class="2xl:hidden text-[clamp(1.25rem,1.5vw,1.5rem)]"
-            icon="i-lucide-menu"
+            icon="i-custom-lucide-menu"
             color="primary"
             variant="link"
           />

@@ -27,6 +27,10 @@ export default defineNuxtConfig({
         dir: './app/assets/icons',
       },
     ],
+    mode: 'client',
+    clientBundle: {
+      includeCustomCollections: true,
+    },
   },
   components: [
     {

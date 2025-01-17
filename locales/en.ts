@@ -1,7 +1,7 @@
 export default {
   site: {
     title: 'Good Wind',
-    slogon1: 'YANGZHOU GOOD WIND POWER',
+    slogon1: 'YANGZHOU GOOD WIND',
     slogon2: 'INFINITE POWER',
     languages: {
       zh: 'Chinese',

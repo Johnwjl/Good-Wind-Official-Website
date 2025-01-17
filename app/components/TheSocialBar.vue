@@ -13,14 +13,14 @@
   const socialItems = ref<SocialItem[]>([
     {
       id: 'phone',
-      icon: 'i-heroicons-phone',
+      icon: 'i-custom-social-phone',
       label: '电话咨询',
       content: '+86 123 4567 8901',
       type: 'text',
     },
     {
       id: 'email',
-      icon: 'i-heroicons-envelope',
+      icon: 'i-custom-social-email',
       label: '邮件咨询',
       content: 'contact@example.com',
       type: 'link',
@@ -28,14 +28,14 @@
     },
     {
       id: 'wechat',
-      icon: 'i-simple-icons-wechat',
+      icon: 'i-custom-social-wechat',
       label: '微信咨询',
-      content: '/images/wechat-qr.png', // 二维码图片路径
+      content: '/images/wechat-qr.png',
       type: 'qrcode',
     },
     {
       id: 'whatsapp',
-      icon: 'i-simple-icons-whatsapp',
+      icon: 'i-custom-social-whatsapp',
       label: 'WhatsApp',
       content: '+86 123 4567 8901',
       type: 'link',

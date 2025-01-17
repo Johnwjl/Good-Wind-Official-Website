@@ -43,6 +43,13 @@
       type: 'link',
       link: 'https://wa.me/8619708412781',
     },
+    {
+      id: 'scrollTop',
+      icon: 'i-custom-arrow-up',
+      label: '返回顶部',
+      content: '返回顶部',
+      type: 'text',
+    },
   ])
 
   const activeItem = ref<string | null>(null)
@@ -53,6 +60,14 @@
 
   // 使用计算属性控制显示逻辑
   const isVisible = computed(() => scrollY.value > windowHeight.value * 0.3)
+
+  // 添加滚动到顶部的函数
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
 </script>
 
 <template>
@@ -68,6 +83,7 @@
           class="relative group"
           @mouseenter="activeItem = item.id"
           @mouseleave="activeItem = null"
+          @click="item.id === 'scrollTop' ? scrollToTop() : null"
         >
           <!-- 图标按钮 -->
           <UButton
@@ -114,6 +130,15 @@
                 >
                   {{ item.content }}
                 </a>
+              </template>
+
+              <!-- 文本类型 -->
+              <template v-else-if="item.type === 'text'">
+                <span
+                  class="text-sm font-medium whitespace-nowrap text-gray-700 dark:text-gray-200"
+                >
+                  {{ item.content }}
+                </span>
               </template>
             </div>
           </Transition>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '#ui/types'
-  // import banner1 from '~/assets/img/banner1.jpg'
-  // import banner2 from '~/assets/img/banner2.jpg'
+  import banner1 from '~/assets/img/banner1.jpg'
+  import banner2 from '~/assets/img/banner2.jpg'
+  import banner3 from '~/assets/img/banner3.svg'
   import c02 from '~/assets/img/c02.jpg'
   import c03 from '~/assets/img/c03.jpg'
   import c04 from '~/assets/img/c04.jpg'
@@ -32,16 +33,20 @@
     },
   ])
 
-  // const bannerImages = ref([
-  //   {
-  //     id: 1,
-  //     url: banner1,
-  //   },
-  //   {
-  //     id: 2,
-  //     url: banner2,
-  //   },
-  // ])
+  const bannerImages = ref([
+    {
+      id: 1,
+      url: banner1,
+    },
+    {
+      id: 2,
+      url: banner2,
+    },
+    {
+      id: 3,
+      url: banner3,
+    },
+  ])
 
   interface FormState {
     applicationType: string
@@ -178,7 +183,7 @@
     <div class="flex flex-col lg:flex-row gap-8">
       <div class="w-full lg:w-2/3">
         <div class="bg-gray-100 dark:bg-gray-800 aspect-video">
-          <!-- <UCarousel
+          <UCarousel
             v-slot="{ item }"
             :items="bannerImages"
             fade
@@ -190,34 +195,37 @@
               :alt="`Banner ${item.id}`"
               class="w-full h-full aspect-[16/9] object-cover object-center rounded-lg shadow-lg"
             />
-          </UCarousel> -->
-          <img
-            src="~/assets/img/banner3.webp"
+          </UCarousel>
+          <!-- <img
+            src="~/assets/img/banner3.svg"
             alt="Banner"
             class="w-full h-full aspect-[16/9] object-cover object-center rounded-lg shadow-lg"
             loading="eager"
             fetchpriority="high"
-          />
+          /> -->
         </div>
       </div>
 
       <div class="w-full lg:w-1/3 flex h-auto">
         <UCard class="w-full flex flex-col h-full">
           <template #header>
-            <h3 class="text-2xl font-bold text-center">{{ t('home.search.title') }}</h3>
+            <div class="bg-gray-100 dark:bg-gray-800 -m-4 sm:-mx-6 p-4 sm:px-6 rounded-t-lg">
+              <h3 class="text-2xl font-bold text-center">
+                {{ t('home.search.title') }}
+              </h3>
+            </div>
           </template>
 
           <UForm
             :schema="schema"
             :state="state"
-            class="flex flex-col flex-1 gap-4"
+            class="flex flex-col flex-1 gap-4 pr-10"
             @submit="onSubmit"
           >
             <div class="flex flex-col flex-1 gap-4">
               <UFormField
                 v-for="field in formFields"
                 :key="field.name"
-                :name="field.name"
                 :label="field.label"
                 class="grid grid-cols-[auto_1fr] items-center gap-4"
                 :ui="{
@@ -234,11 +242,50 @@
                     {{ field.label }}
                   </div>
                 </template>
-                <USelect
-                  v-model="state[field.name as keyof FormState]"
-                  :items="field.options"
-                  class="w-full"
-                />
+
+                <!-- 为燃料类型和频率使用按钮组 -->
+                <template v-if="['fuelType', 'frequency'].includes(field.name)">
+                  <UButtonGroup
+                    class="w-full"
+                    size="sm"
+                    :ui="{
+                      wrapper: 'w-full',
+                      base: 'w-full grid grid-cols-2 gap-2',
+                      container: 'w-full',
+                    }"
+                  >
+                    <template
+                      v-for="option in field.options"
+                      :key="option.value"
+                    >
+                      <UButton
+                        class="flex-1 text-center cursor-pointer justify-center items-center flex"
+                        :color="
+                          state[field.name as keyof FormState] === option.value
+                            ? 'primary'
+                            : 'neutral'
+                        "
+                        :variant="
+                          state[field.name as keyof FormState] === option.value
+                            ? 'solid'
+                            : 'outline'
+                        "
+                        @click="state[field.name as keyof FormState] = option.value"
+                      >
+                        {{ option.label }}
+                      </UButton>
+                    </template>
+                  </UButtonGroup>
+                </template>
+
+                <!-- 其他字段保持使用下拉框 -->
+                <template v-else>
+                  <USelect
+                    v-model="state[field.name as keyof FormState]"
+                    :items="field.options"
+                    class="w-full"
+                  />
+                </template>
               </UFormField>
             </div>
 
@@ -246,6 +293,7 @@
               type="submit"
               color="primary"
               block
+              square
             >
               {{ t('home.search.submit') }}
             </UButton>

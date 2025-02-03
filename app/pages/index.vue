@@ -1,11 +1,13 @@
 <script setup lang="ts">
-  import banner1 from '~/assets/img/banner1.jpg'
-  import banner2 from '~/assets/img/banner2.jpg'
-  import banner3 from '~/assets/img/banner3.svg'
-  import c02 from '~/assets/img/c02.jpg'
-  import c03 from '~/assets/img/c03.jpg'
-  import c04 from '~/assets/img/c04.jpg'
-  import c05 from '~/assets/img/c05.jpg'
+  import banner1 from '@/assets/img/banner1.jpg'
+  import banner2 from '@/assets/img/banner2.jpg'
+  import banner3 from '@/assets/img/banner3.svg'
+  import c02 from '@/assets/img/c02.jpg'
+  import c03 from '@/assets/img/c03.jpg'
+  import c04 from '@/assets/img/c04.jpg'
+  import c05 from '@/assets/img/c05.jpg'
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
 
@@ -76,9 +78,10 @@
       </div>
     </div>
   </section>
-
+  <!-- 轮播图 和 机组搜索表单 -->
   <section class="mt-12">
     <div class="flex flex-col lg:flex-row gap-8">
+      <!-- 轮播图 -->
       <div class="w-full lg:w-2/3">
         <div class="bg-gray-100 dark:bg-gray-800 aspect-video">
           <UCarousel
@@ -96,8 +99,8 @@
           </UCarousel>
         </div>
       </div>
-
-      <div class="w-full lg:w-1/3 flex h-auto">
+      <!-- 机组搜索表单 -->
+      <div class="flex w-full h-auto lg:w-1/3">
         <TheGeneratorSearch />
       </div>
     </div>

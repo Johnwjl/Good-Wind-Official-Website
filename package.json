@@ -13,17 +13,18 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@nuxt/ui": "https://pkg.pr.new/@nuxt/ui@1e88512beff6f182c5ef27dd425970e5ce4bbb3f",
-    "@nuxtjs/i18n": "9.1.1",
-    "@vueuse/core": "^12.4.0",
-    "nuxt": "^3.15.2"
+    "@nuxt/ui": "3.0.0-alpha.12",
+    "@nuxtjs/i18n": "9.1.5",
+    "@vueuse/core": "^12.5.0",
+    "nuxt": "^3.15.4",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@nuxt/devtools": "2.0.0-beta.2",
-    "@nuxt/eslint": "^0.7.5",
-    "eslint": "^9.18.0",
+    "@nuxt/devtools": "2.0.0-beta.4",
+    "@nuxt/eslint": "^1.0.0",
+    "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-prettier": "^5.2.2",
+    "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.4.2",
     "typescript": "^5.7.3"
   },

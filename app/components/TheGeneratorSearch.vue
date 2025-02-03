@@ -1,8 +1,12 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '#ui/types'
+  import type { PropType } from 'vue'
 
   const { t } = useI18n()
 
+  const form = useTemplateRef('form')
+
+  // 定义表单状态接口
   interface FormState {
     applicationType: string
     powerRange: string
@@ -12,6 +16,7 @@
     phase?: string
   }
 
+  // 完整定义所有表单字段
   const formFields = computed(() => [
     {
       name: 'fuelType',
@@ -87,26 +92,57 @@
     ),
   )
 
-  const state = ref<FormState>({
-    applicationType: '',
-    powerRange: '',
-    voltage: '',
-    fuelType: '',
-    frequency: '',
-    phase: '',
+  // props 定义
+  const props = defineProps({
+    layout: {
+      type: String,
+      default: 'vertical',
+      validator: (value: string) => ['vertical', 'horizontal'].includes(value),
+    },
+    initialState: {
+      type: Object as PropType<Partial<FormState>>,
+      default: () => ({}),
+    },
   })
 
+  // 使用 initialState 初始化表单状态
+  const state = reactive<Partial<FormState>>({
+    applicationType: props.initialState.applicationType || '',
+    powerRange: props.initialState.powerRange || '',
+    voltage: props.initialState.voltage || '',
+    fuelType: props.initialState.fuelType || '',
+    frequency: props.initialState.frequency || '',
+    phase: props.initialState.phase || '',
+  })
+
+  // 修改表单提交处理
   const onSubmit = async (event: FormSubmitEvent<FormState>) => {
     try {
-      console.log('表单数据:', event.data)
+      // 将表单数据转换为查询参数
+      const query = Object.entries(event.data)
+        .filter(([_, value]) => value) // 过滤掉空值
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+
+      // 使用 navigateTo 跳转到产品页
+      await navigateTo({
+        path: '/products',
+        query,
+      })
     } catch (error) {
       console.error('提交表单时出错:', error)
     }
   }
+
+  const buttonGroupFields = computed(() =>
+    formFields.value.filter((field) => ['fuelType', 'frequency'].includes(field.name)),
+  )
+  const selectFields = computed(() =>
+    formFields.value.filter((field) => !['fuelType', 'frequency'].includes(field.name)),
+  )
 </script>
 
 <template>
-  <UCard class="w-full flex flex-col h-full">
+  <UCard class="w-full h-full flex flex-col">
     <template #header>
       <div class="bg-gray-100 dark:bg-gray-800 -m-4 sm:-mx-6 p-4 sm:px-6 rounded-t-lg">
         <h3 class="text-2xl font-bold text-center">
@@ -116,26 +152,35 @@
     </template>
 
     <UForm
+      ref="form"
       :schema="schema"
       :state="state"
-      class="flex flex-col flex-1 gap-4 pr-10"
+      class="flex flex-1 gap-4 pr-10"
+      :class="[props.layout === 'horizontal' ? 'flex-row flex-wrap' : 'flex-col']"
       @submit="onSubmit"
     >
-      <div class="flex flex-col flex-1 gap-4">
+      <!-- 搜索字段 -->
+      <div
+        :class="[
+          'flex gap-4',
+          props.layout === 'horizontal' ? 'flex-row flex-wrap flex-1' : 'flex-col',
+        ]"
+      >
         <UFormField
-          v-for="field in formFields"
+          v-for="field in buttonGroupFields"
           :key="field.name"
+          :name="field.name"
           :label="field.label"
-          class="grid grid-cols-[auto_1fr] items-center gap-4"
-          :ui="{
-            labelWrapper: 'justify-center',
-          }"
+          :class="[
+            props.layout === 'horizontal'
+              ? 'flex-1 min-w-[200px]'
+              : 'grid grid-cols-[auto_1fr] items-center gap-4',
+          ]"
         >
           <template #label>
             <div class="flex items-center gap-2 w-24">
               <UIcon
                 :name="field.icon"
-                mode="svg"
                 class="size-5"
               />
               {{ field.label }}
@@ -143,52 +188,66 @@
           </template>
 
           <!-- 为燃料类型和频率使用按钮组 -->
-          <template v-if="['fuelType', 'frequency'].includes(field.name)">
-            <UButtonGroup
-              class="w-full"
-              size="sm"
-              :ui="{
-                wrapper: 'w-full',
-                base: 'w-full grid grid-cols-2 gap-2',
-                container: 'w-full',
-              }"
+          <UButtonGroup
+            class="w-full"
+            size="sm"
+          >
+            <template
+              v-for="option in field.options"
+              :key="option.value"
             >
-              <template
-                v-for="option in field.options"
-                :key="option.value"
+              <UButton
+                class="flex-1 flex justify-center items-center text-center cursor-pointer"
+                :color="
+                  state[field.name as keyof FormState] === option.value ? 'primary' : 'neutral'
+                "
+                :variant="
+                  state[field.name as keyof FormState] === option.value ? 'solid' : 'outline'
+                "
+                @click="state[field.name as keyof FormState] = option.value"
               >
-                <UButton
-                  class="flex-1 text-center cursor-pointer justify-center items-center flex"
-                  :color="
-                    state[field.name as keyof FormState] === option.value ? 'primary' : 'neutral'
-                  "
-                  :variant="
-                    state[field.name as keyof FormState] === option.value ? 'solid' : 'outline'
-                  "
-                  @click="state[field.name as keyof FormState] = option.value"
-                >
-                  {{ option.label }}
-                </UButton>
-              </template>
-            </UButtonGroup>
+                {{ option.label }}
+              </UButton>
+            </template>
+          </UButtonGroup>
+        </UFormField>
+        <!-- 其他字段使用下拉框 -->
+        <UFormField
+          v-for="field in selectFields"
+          :key="field.name"
+          :name="field.name"
+          :class="[
+            props.layout === 'horizontal'
+              ? 'flex-1 min-w-[200px]'
+              : 'grid grid-cols-[auto_1fr] items-center gap-4',
+          ]"
+        >
+          <template #label>
+            <div class="flex items-center gap-2 w-24">
+              <UIcon
+                :name="field.icon"
+                class="size-5"
+              />
+              {{ field.label }}
+            </div>
           </template>
 
-          <!-- 其他字段保持使用下拉框 -->
-          <template v-else>
-            <USelect
-              v-model="state[field.name as keyof FormState]"
-              :items="field.options"
-              class="w-full"
-            />
-          </template>
+          <USelect
+            v-model="state[field.name as keyof FormState]"
+            :items="field.options"
+            class="w-full"
+          />
         </UFormField>
       </div>
 
+      <!-- 搜索按钮 -->
       <UButton
         type="submit"
         color="primary"
-        block
-        square
+        :class="[
+          'w-full flex items-center justify-center',
+          props.layout === 'horizontal' ? 'self-end w-auto px-8' : '',
+        ]"
       >
         {{ t('home.search.submit') }}
       </UButton>

@@ -1,20 +1,48 @@
 <script setup lang="ts">
   import type { FormSubmitEvent } from '#ui/types'
   import type { PropType } from 'vue'
+  import * as z from 'zod'
 
   const { t } = useI18n()
 
   const form = useTemplateRef('form')
 
-  // 定义表单状态接口
-  interface FormState {
-    applicationType: string
-    powerRange: string
-    voltage: string
-    fuelType: string
-    frequency?: string
-    phase?: string
-  }
+  // 使用 Zod 定义 schema
+  const schema = z.object({
+    applicationType: z.string().min(1, {
+      message: t('home.search.validation.required', {
+        field: t('home.search.fields.applicationType.label'),
+      }),
+    }),
+    powerRange: z.string().min(1, {
+      message: t('home.search.validation.required', {
+        field: t('home.search.fields.powerRange.label'),
+      }),
+    }),
+    voltage: z.string().min(1, {
+      message: t('home.search.validation.required', {
+        field: t('home.search.fields.voltage.label'),
+      }),
+    }),
+    fuelType: z.string().min(1, {
+      message: t('home.search.validation.required', {
+        field: t('home.search.fields.fuelType.label'),
+      }),
+    }),
+    frequency: z.string().min(1, {
+      message: t('home.search.validation.required', {
+        field: t('home.search.fields.frequency.label'),
+      }),
+    }),
+    phase: z.string().min(1, {
+      message: t('home.search.validation.required', {
+        field: t('home.search.fields.phase.label'),
+      }),
+    }),
+  })
+
+  // 从 schema 中推导出类型
+  type FormState = z.input<typeof schema>
 
   // 完整定义所有表单字段
   const formFields = computed(() => [
@@ -78,21 +106,7 @@
     },
   ])
 
-  // 动态生成 schema
-  const schema = computed(() =>
-    formFields.value.reduce(
-      (acc, field) => {
-        acc[field.name] = {
-          required: true,
-          message: t('home.search.validation.required', { field: field.label }),
-        }
-        return acc
-      },
-      {} as Record<string, { required: boolean; message: string }>,
-    ),
-  )
-
-  // props 定义
+  // 更新 props 定义中的类型
   const props = defineProps({
     layout: {
       type: String,

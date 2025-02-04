@@ -7,6 +7,15 @@
 
   const form = useTemplateRef('form')
 
+  // 添加错误处理函数
+  const validateField = async (fieldName: keyof FormState) => {
+    try {
+      await form.value?.validate({ name: fieldName })
+    } catch {
+      // 验证失败是预期的行为，不需要额外处理
+    }
+  }
+
   // 使用 Zod 定义 schema
   const schema = z.object({
     applicationType: z.string().min(1, {
@@ -218,7 +227,13 @@
                 :variant="
                   state[field.name as keyof FormState] === option.value ? 'solid' : 'outline'
                 "
-                @click="state[field.name as keyof FormState] = option.value"
+                @click="
+                  async () => {
+                    state[field.name as keyof FormState] = option.value
+                    // 手动触发表单校验
+                    await validateField(field.name as keyof FormState)
+                  }
+                "
               >
                 {{ option.label }}
               </UButton>

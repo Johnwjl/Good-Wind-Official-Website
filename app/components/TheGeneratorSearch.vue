@@ -157,11 +157,37 @@
   }
 
   const buttonGroupFields = computed(() =>
-    formFields.value.filter((field) => ['fuelType', 'frequency'].includes(field.name)),
+    formFields.value.filter((field) => ['fuelType', 'frequency', 'phase'].includes(field.name)),
   )
   const selectFields = computed(() =>
-    formFields.value.filter((field) => !['fuelType', 'frequency'].includes(field.name)),
+    formFields.value.filter((field) => !['fuelType', 'frequency', 'phase'].includes(field.name)),
   )
+
+  // 定义表单字段的顺序
+  const fieldOrder = [
+    'fuelType',
+    'frequency',
+    'phase',
+    'voltage',
+    'applicationType',
+    'powerRange',
+  ] as const
+
+  // 使用计算属性来判断字段是否可用
+  const isFieldEnabled = computed(() => {
+    const result: Record<string, boolean> = {
+      [fieldOrder[0]]: true, // 第一个字段永远可用
+    }
+
+    // 从第二个字段开始，检查前一个字段是否有值
+    for (let i = 1; i < fieldOrder.length; i++) {
+      const prevField = fieldOrder[i - 1] as keyof FormState
+      const currentField = fieldOrder[i] as keyof FormState
+      result[currentField] = Boolean(state[prevField])
+    }
+
+    return result
+  })
 </script>
 
 <template>
@@ -221,6 +247,8 @@
             >
               <UButton
                 class="flex-1 flex justify-center items-center text-center cursor-pointer"
+                :class="[!isFieldEnabled[field.name] && 'cursor-not-allowed opacity-50']"
+                :disabled="!isFieldEnabled[field.name]"
                 :color="
                   state[field.name as keyof FormState] === option.value ? 'primary' : 'neutral'
                 "
@@ -229,9 +257,10 @@
                 "
                 @click="
                   async () => {
-                    state[field.name as keyof FormState] = option.value
-                    // 手动触发表单校验
-                    await validateField(field.name as keyof FormState)
+                    if (isFieldEnabled[field.name]) {
+                      state[field.name as keyof FormState] = option.value
+                      await validateField(field.name as keyof FormState)
+                    }
                   }
                 "
               >
@@ -265,6 +294,7 @@
             v-model="state[field.name as keyof FormState]"
             :items="field.options"
             class="w-full"
+            :disabled="!isFieldEnabled[field.name]"
           />
         </UFormField>
       </div>

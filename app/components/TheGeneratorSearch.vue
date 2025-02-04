@@ -85,11 +85,16 @@
     {
       name: 'voltage',
       label: t('home.search.fields.voltage.label'),
-      options: [
-        { label: t('home.search.fields.voltage.level1'), value: '220-380' },
-        { label: t('home.search.fields.voltage.level2'), value: '400-690' },
-        { label: t('home.search.fields.voltage.level3'), value: '6300-10500' },
-      ],
+      options: computed(() => {
+        const { fuelType, frequency, phase } = state
+        if (!fuelType || !frequency || !phase) return []
+
+        return (
+          voltageOptionsMap[fuelType as keyof typeof voltageOptionsMap]?.[
+            frequency as '50' | '60'
+          ]?.[phase as 'single' | 'three'] ?? []
+        )
+      }).value,
       icon: 'i-custom-volta',
     },
     {
@@ -187,6 +192,91 @@
     }
 
     return result
+  })
+
+  // 定义电压选项映射表
+  const voltageOptionsMap = {
+    // 柴油发电机组
+    diesel: {
+      // 50Hz
+      '50': {
+        // 单相
+        single: [{ label: '230 V (m)', value: '230-m' }],
+        // 三相
+        three: [
+          { label: '400/230 V', value: '400-230' },
+          { label: '415/240 V', value: '415-240' },
+          { label: '200/115 V', value: '200-115' },
+          { label: '380/220 V', value: '380-220' },
+          { label: '230 V (t)', value: '230-t' },
+          { label: '3,3 kV', value: '3300' },
+          { label: '6 kV', value: '6000' },
+          { label: '6,3 kV', value: '6300' },
+          { label: '6,6 kV', value: '6600' },
+          { label: '10 kV', value: '10000' },
+          { label: '11 kV', value: '11000' },
+        ],
+      },
+      // 60Hz
+      '60': {
+        // 单相
+        single: [{ label: '240/120 V', value: '240-120' }],
+        // 三相
+        three: [
+          { label: '380/220 V', value: '380-220' },
+          { label: '416/240 V', value: '416-240' },
+          { label: '480/277 V', value: '480-277' },
+          { label: '208/120 V', value: '208-120' },
+          { label: '220/127 V', value: '220-127' },
+          { label: '440/254 V', value: '440-254' },
+          { label: '460/265 V', value: '460-265' },
+          { label: '600/347 V', value: '600-347' },
+          { label: '4,16 kV', value: '4160' },
+          { label: '6,6 kV', value: '6600' },
+          { label: '7,2 kV', value: '7200' },
+          { label: '12,47 kV', value: '12470' },
+          { label: '13,8 kV', value: '13800' },
+        ],
+      },
+    },
+    // 燃气发电机组
+    gas: {
+      // 50Hz
+      '50': {
+        // 单相
+        single: [{ label: '230 V (m)', value: '230-m' }],
+        // 三相
+        three: [
+          { label: '400/230 V', value: '400-230' },
+          { label: '415/240 V', value: '415-240' },
+          { label: '200/115 V', value: '200-115' },
+          { label: '380/220 V', value: '380-220' },
+          { label: '230 V (t)', value: '230-t' },
+        ],
+      },
+      // 60Hz
+      '60': {
+        // 单相
+        single: [{ label: '240/120 V', value: '240-120' }],
+        // 三相
+        three: [
+          { label: '380/220 V', value: '380-220' },
+          { label: '416/240 V', value: '416-240' },
+          { label: '480/277 V', value: '480-277' },
+          { label: '208/120 V', value: '208-120' },
+          { label: '220/127 V', value: '220-127' },
+          { label: '440/254 V', value: '440-254' },
+          { label: '460/265 V', value: '460-265' },
+          { label: '600/347 V', value: '600-347' },
+          { label: '240/138 V', value: '240-138' },
+        ],
+      },
+    },
+  }
+
+  // 监听前三个字段的变化，清空电压值
+  watch([() => state.fuelType, () => state.frequency, () => state.phase], () => {
+    state.voltage = ''
   })
 </script>
 

@@ -138,4 +138,7 @@ export default {
       },
     },
   },
+  products: {
+    noResults: '暂无符合条件的产品',
+  },
 }

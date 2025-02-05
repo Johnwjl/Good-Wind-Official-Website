@@ -59,7 +59,7 @@
   const { height: windowHeight } = useWindowSize()
 
   // 使用计算属性控制显示逻辑
-  const isVisible = computed(() => scrollY.value > windowHeight.value * 0.3)
+  const isVisible = computed(() => scrollY.value > windowHeight.value * 0.1)
 
   // 添加滚动到顶部的函数
   const scrollToTop = () => {

@@ -66,7 +66,7 @@
     <TheBanner />
 
     <!-- 主要内容区域 -->
-    <main class="flex-1 mx-auto px-4 py-8">
+    <main class="flex-1 md:mx-auto px-4 py-8">
       <NuxtPage />
     </main>
 

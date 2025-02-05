@@ -134,4 +134,7 @@ export default {
       },
     },
   },
+  products: {
+    noResults: 'No matching products found',
+  },
 }

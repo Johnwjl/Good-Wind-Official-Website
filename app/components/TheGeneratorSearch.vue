@@ -295,14 +295,17 @@
       :schema="schema"
       :state="state"
       class="flex flex-1 gap-4 pr-10"
-      :class="[props.layout === 'horizontal' ? 'flex-row flex-wrap' : 'flex-col']"
+      :class="[
+        'flex-col', // 默认垂直布局
+        props.layout === 'horizontal' ? 'md:flex-row md:flex-wrap pr-0' : '', // 在 md 断点以上时,如果是水平布局则启用
+      ]"
       @submit="onSubmit"
     >
       <!-- 搜索字段 -->
       <div
         :class="[
-          'flex gap-4',
-          props.layout === 'horizontal' ? 'flex-row flex-wrap flex-1' : 'flex-col',
+          'flex gap-4 flex-col', // 默认垂直布局
+          props.layout === 'horizontal' ? 'md:flex-row md:flex-wrap md:flex-1' : '', // 在 md 断点以上时,如果是水平布局则启用
         ]"
       >
         <UFormField
@@ -311,9 +314,8 @@
           :name="field.name"
           :label="field.label"
           :class="[
-            props.layout === 'horizontal'
-              ? 'flex-1 min-w-[200px]'
-              : 'grid grid-cols-[auto_1fr] items-center gap-4',
+            'grid grid-cols-[auto_1fr] items-center gap-4', // 默认网格布局
+            props.layout === 'horizontal' ? 'md:flex-1 md:min-w-[200px]' : '', // 在 md 断点以上时,如果是水平布局则启用
           ]"
         >
           <template #label>
@@ -365,9 +367,8 @@
           :key="field.name"
           :name="field.name"
           :class="[
-            props.layout === 'horizontal'
-              ? 'flex-1 min-w-[200px]'
-              : 'grid grid-cols-[auto_1fr] items-center gap-4',
+            'grid grid-cols-[auto_1fr] items-center gap-4', // 默认网格布局
+            props.layout === 'horizontal' ? 'md:flex-1 md:min-w-[200px]' : '', // 在 md 断点以上时,如果是水平布局则启用
           ]"
         >
           <template #label>
@@ -394,8 +395,8 @@
         type="submit"
         color="primary"
         :class="[
-          'w-full flex items-center justify-center',
-          props.layout === 'horizontal' ? 'self-end w-auto px-8' : '',
+          'w-full flex items-center justify-center', // 默认样式
+          props.layout === 'horizontal' ? 'md:self-end md:w-auto md:px-8' : '', // 在 md 断点以上时,如果是水平布局则启用
         ]"
       >
         {{ t('home.search.submit') }}
